@@ -6,6 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun MainScreen(viewModel: MainScreenViewModel = hiltViewModel()) {
-    Text("TODO: Create your main screen here, note that the view model is given to you.")
-    Text("viewModel = $viewModel")
+    Text(
+        "TODO: Create your main screen here, note that you can access the viewModel from " +
+                "the composable parameter ($viewModel)"
+    )
 }
