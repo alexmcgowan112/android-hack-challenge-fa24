@@ -1,5 +1,5 @@
 package com.example.a6starter.data.remote
 
-interface MyApi {
+interface DogBreedApi {
     // TODO specify your API
 }
