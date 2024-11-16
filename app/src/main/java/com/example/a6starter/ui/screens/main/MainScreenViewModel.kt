@@ -50,7 +50,8 @@ class MainScreenViewModel @Inject constructor(
 
 
     /**
-     * Adds a dog breed to favorites, based on its id
+     * Adds a dog breed to favorites, based on its id.
+     * Use the favoritesFlow variable that is already defined for you.
      */
     fun addFavoriteBreed(dogBreedId: String) {
         // TODO
@@ -58,6 +59,7 @@ class MainScreenViewModel @Inject constructor(
 
     /**
      * Removes a dog breed from favorites, based on its id
+     * Use the favoritesFlow variable that is already defined for you.
      */
     fun removeFavoriteBreed(dogBreedId: String) {
         // TODO
