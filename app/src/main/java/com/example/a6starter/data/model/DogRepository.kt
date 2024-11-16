@@ -11,6 +11,9 @@ class DogRepository @Inject constructor(
     private val dogBreedApi: DogBreedApi,
 ) {
     suspend fun getDogBreeds(pageNumber: Int): Response<DogEntity> {
-        TODO("Implement this function")
+        TODO(
+            "Implement this function, all you need to do here is return" +
+                    "the call from your API"
+        )
     }
 }
