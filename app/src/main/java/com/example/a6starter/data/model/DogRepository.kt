@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 class DogRepository @Inject constructor(
-    dogBreedApi: DogBreedApi,
+    private val dogBreedApi: DogBreedApi,
 ) {
     suspend fun getDogBreeds(pageNumber: Int): Response<DogEntity> {
         TODO("Implement this function")
