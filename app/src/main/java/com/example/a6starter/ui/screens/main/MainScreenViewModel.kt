@@ -19,7 +19,7 @@ data class MainScreenViewState(
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    dogRepository: DogRepository,
+    private val dogRepository: DogRepository,
 ) : ViewModel() {
     private val favoritesFlow = MutableStateFlow(emptyList<String>())
     private val allBreedsFlow = MutableStateFlow(emptyList<DogBreed>())
