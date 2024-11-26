@@ -13,12 +13,12 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class MainScreenViewState(
+data class InfoScreenViewState(
     val property1: Unit = TODO("Specify your Main Screen View State")
 )
 
 @HiltViewModel
-class MainScreenViewModel @Inject constructor(
+class InfoScreenViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
     // FIXME - Placeholders
