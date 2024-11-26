@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -152,12 +151,15 @@ fun UploadScreen() {
     val tempList = listOf(1, 2, 3, 4)
     val lazyListState = rememberLazyListState()
     Column(
-        modifier = Modifier.padding(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        modifier = Modifier
+            .padding(20.dp)
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+
+        ) {
         Text(text = "Main Screen", fontSize = 40.sp, textAlign = TextAlign.Center)
         LazyColumn(state = lazyListState) {
-            items(tempList) { index ->
+            items(100) { index ->
                 ColumnCard(index.toString())
             }
             //item(key = LOADING_KEY) {
