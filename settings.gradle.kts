@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "A6 Starter"
+rootProject.name = "Hack Challenge"
 include(":app")
  
