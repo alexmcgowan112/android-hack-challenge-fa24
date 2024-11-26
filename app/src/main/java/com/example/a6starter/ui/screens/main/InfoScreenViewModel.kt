@@ -48,7 +48,7 @@ class InfoScreenViewModel @Inject constructor(
         favorites: List<String>,
         allBreeds: List<DogBreed>
     ): MainScreenViewState {
-        TODO("Fill out this function to create your view state")
+            TODO("Fill out this function to create your view state")
     }
 
 

@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class MainScreenViewState(
-    val property1: Unit = TODO("Specify your Main Screen View State")
+    val favorites: List<String> = emptyList<String>(),
+    val allBreeds: List<DogBreed> = emptyList<DogBreed>()
 )
 
 @HiltViewModel
@@ -48,7 +49,12 @@ class MainScreenViewModel @Inject constructor(
         favorites: List<String>,
         allBreeds: List<DogBreed>
     ): MainScreenViewState {
-        TODO("Fill out this function to create your view state")
+
+        return MainScreenViewState(
+            favorites = favorites,
+            allBreeds = allBreeds
+        )
+
     }
 
 
