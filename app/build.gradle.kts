@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -64,6 +65,8 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.converter.moshi)
     implementation(libs.moshi.kotlin)
+    implementation(libs.androidx.compose.navigation)
+    implementation(libs.kotlinx.serialization.json)
 }
 
 // Allow references to generated code
