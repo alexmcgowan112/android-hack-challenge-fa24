@@ -1,6 +1,8 @@
 package com.example.a6starter.ui.screens.main
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,8 +16,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -43,19 +49,23 @@ fun MainScreen(viewModel: MainScreenViewModel = hiltViewModel()) {
         }.launchIn(coroutineScope)
     }**/
     val tempList = listOf(1,2,3,4)
-    LazyColumn(state = lazyListState) {
-        items(tempList) { index ->
-            ColumnCard(index.toString())
+    Column(modifier = Modifier.padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = "Main Screen", fontSize = 40.sp, textAlign = TextAlign.Center)
+        LazyColumn(state = lazyListState) {
+            items(tempList) { index ->
+                ColumnCard(index.toString())
+            }
+            //item(key = LOADING_KEY) {
+            //    CircularProgressIndicator()
+            //}
         }
-        //item(key = LOADING_KEY) {
-        //    CircularProgressIndicator()
-        //}
     }
-}
+    }
+
 
 @Composable
 fun ColumnCard(displayText: String) {
-    Column(modifier = Modifier.padding(10.dp)) {
-        Text(displayText)
+    Column(modifier = Modifier.padding(10.dp).background(Color.LightGray)) {
+        Text(text = displayText)
     }
 }
