@@ -13,8 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.a6starter.ui.theme.A6StarterTheme
 
 @Composable
 fun PreferencesScreen() {
@@ -51,4 +53,12 @@ fun CheckBox(boxString: String) {
     /**Text(
     if (isChecked) "Checkbox is checked" else "Checkbox is unchecked"
     )**/
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CheckBoxPreview() {
+    A6StarterTheme {
+        CheckBox("Homework")
+    }
 }
