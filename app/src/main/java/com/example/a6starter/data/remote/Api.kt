@@ -1,6 +1,6 @@
 package com.example.a6starter.data.remote
 
-interface DogBreedApi {
+interface Api {
     // TODO specify your API
     //  This time you will want your function to take in a parameter for the page number, since we
     //  are dealing with paginated data.

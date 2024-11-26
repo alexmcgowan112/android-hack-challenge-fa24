@@ -1,14 +1,14 @@
 package com.example.a6starter.data.model
 
 import com.example.a6starter.data.entities.DogEntity
-import com.example.a6starter.data.remote.DogBreedApi
+import com.example.a6starter.data.remote.Api
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DogRepository @Inject constructor(
-    private val dogBreedApi: DogBreedApi,
+class Repository @Inject constructor(
+    private val api: Api,
 ) {
     suspend fun getDogBreeds(pageNumber: Int): Response<DogEntity> {
         TODO(
