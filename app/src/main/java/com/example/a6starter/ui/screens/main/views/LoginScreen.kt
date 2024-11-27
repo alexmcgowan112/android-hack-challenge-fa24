@@ -59,8 +59,8 @@ fun LoginScreen() {
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("NetID: ")
-                    TextField(password,
-                        onValueChange = { password = it },
+                    TextField(netid,
+                        onValueChange = { netid = it },
                         placeholder = { Text("Type NetID Here") })
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
