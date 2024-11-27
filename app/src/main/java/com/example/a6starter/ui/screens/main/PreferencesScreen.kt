@@ -1,8 +1,11 @@
 package com.example.a6starter.ui.screens.main
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
@@ -20,19 +23,24 @@ import com.example.a6starter.ui.theme.A6StarterTheme
 
 @Composable
 fun PreferencesScreen() {
-    Column(
-        modifier = Modifier
-            .padding(20.dp)
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
-        Text(text = "Set Your Preferences", fontSize = 30.sp)
-        Text("Study Session Objective:")
-        CheckBox("Review")
-        CheckBox("Homework")
-    }
+    Box (modifier = Modifier.fillMaxSize().padding(20.dp), contentAlignment = Alignment.Center) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        )
+        {
+            Text(text = "Set Your Preferences", fontSize = 30.sp)
+            Text("Study Session Objective:")
+            CheckBox("Review")
+            CheckBox("Homework")
 
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text("Preferred Time(s):")
+            CheckBox("Morning")
+            CheckBox("Afternoon")
+            CheckBox("Evening")
+        }
+    }
 }
 
 @Composable
@@ -60,5 +68,13 @@ fun CheckBox(boxString: String) {
 fun CheckBoxPreview() {
     A6StarterTheme {
         CheckBox("Homework")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreferencesPreview() {
+    A6StarterTheme {
+        PreferencesScreen()
     }
 }

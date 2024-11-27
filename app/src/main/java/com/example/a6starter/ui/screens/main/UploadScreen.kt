@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,38 +19,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a6starter.ui.theme.A6StarterTheme
 
-@Composable
-fun InfoScreen() {
-    val lazyListState = rememberLazyListState()
-    Box (modifier = Modifier.fillMaxSize().padding(20.dp), contentAlignment = Alignment.Center) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-            Text(text = "Main Screen", fontSize = 40.sp, textAlign = TextAlign.Center)
-            LazyColumn(state = lazyListState) {
-                items(100) { index ->
-                    ColumnCard(index.toString())
-                }
-            }
-        }
-    }
-}
 
 @Composable
-fun ColumnCard(displayText: String) {
-    Column(
-        modifier = Modifier
-            .padding(10.dp)
-            .background(Color.LightGray)
-    ) {
-        Text(text = displayText)
+fun UploadScreen() {
+    Box(modifier = Modifier.fillMaxSize().padding(20.dp), contentAlignment = Alignment.Center) {
+        Button(onClick = {/*TODO*/}) {
+            Text("Upload Schedule")
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun InfoPreview() {
+fun UploadPreview() {
     A6StarterTheme {
-        InfoScreen()
+        UploadScreen()
     }
 }

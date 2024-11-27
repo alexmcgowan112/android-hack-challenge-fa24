@@ -2,6 +2,8 @@ package com.example.a6starter.data.entities
 
 import com.squareup.moshi.Json
 
+// FIXME - Make this actually relevant to the data we will be using
+
 data class DogEntity(
     val data: List<DogBreed>,
     val links: Links

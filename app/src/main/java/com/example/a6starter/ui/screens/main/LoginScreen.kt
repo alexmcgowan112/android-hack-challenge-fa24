@@ -1,0 +1,93 @@
+package com.example.a6starter.ui.screens.main
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.a6starter.ui.theme.A6StarterTheme
+
+@Composable
+fun LoginScreen() {
+    var hasAccount by remember { mutableStateOf(false) }
+    var netid by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("")}
+    Box (modifier = Modifier.fillMaxSize().padding(20.dp), contentAlignment = Alignment.Center) {
+        Column (horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(20.dp)) {
+            if(hasAccount) {
+                Text("Login", fontSize = 30.sp)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("NetID: ")
+                    TextField(netid,
+                        onValueChange = { netid = it },
+                        placeholder = { Text("Type NetID Here") })
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Password: ")
+                    TextField(password,
+                        onValueChange = { password = it },
+                        placeholder = { Text("Type Password Here") })
+                }
+                Button(onClick = {/*TODO*/}) {
+                    Text("Login")
+                }
+            } else {
+                var name by remember { mutableStateOf("") }
+                var confirm_password by remember { mutableStateOf("")}
+                Text("Sign Up", fontSize = 30.sp)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Name: ")
+                    TextField(name,
+                        onValueChange = { name = it },
+                        placeholder = { Text("Type Name Here") })
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("NetID: ")
+                    TextField(password,
+                        onValueChange = { password = it },
+                        placeholder = { Text("Type NetID Here") })
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Password: ")
+                    TextField(password,
+                        onValueChange = { password = it },
+                        placeholder = { Text("Type Password Here") })
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Confirm Password: ")
+                    TextField(confirm_password,
+                        onValueChange = { confirm_password = it },
+                        placeholder = { Text("Confirm Password Here") })
+                }
+                Button(onClick = {
+                    hasAccount = true
+                    /*TODO*/
+                }) {
+                    Text("Sign Up")
+                }
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoginPreview() {
+    A6StarterTheme {
+        LoginScreen()
+    }
+}
