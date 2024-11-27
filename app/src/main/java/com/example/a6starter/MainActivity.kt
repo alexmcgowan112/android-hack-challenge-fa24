@@ -13,19 +13,52 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.a6starter.ui.screens.main.InfoScreen
-import com.example.a6starter.ui.screens.main.LoginScreen
-import com.example.a6starter.ui.screens.main.NavItem
-import com.example.a6starter.ui.screens.main.PreferencesScreen
-import com.example.a6starter.ui.screens.main.Screen
-import com.example.a6starter.ui.screens.main.UploadScreen
+import androidx.navigation.toRoute
+import com.example.a6starter.ui.screens.main.views.InfoScreen
+import com.example.a6starter.ui.screens.main.views.LoginScreen
+import com.example.a6starter.ui.screens.main.views.PreferencesScreen
+import com.example.a6starter.ui.screens.main.views.UploadScreen
 import com.example.a6starter.ui.theme.A6StarterTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
+
+data class NavItem(
+    val screen: Screen,
+    val label: String,
+    val icon: Painter
+)
+
+@Serializable
+sealed class Screen {
+    @Serializable
+    data object UploadScreen : Screen()
+
+    @Serializable
+    data object InfoScreen : Screen()
+
+    @Serializable
+    data object PreferencesScreen : Screen()
+
+    @Serializable
+    data object LoginScreen : Screen()
+
+    fun NavBackStackEntry.toScreen(): Screen? =
+        when (destination.route?.substringAfterLast(".")?.substringBefore("/")) {
+            "UploadScreen" -> toRoute<UploadScreen>()
+            "InfoScreen" -> toRoute<InfoScreen>()
+            "PreferencesScreen" -> toRoute<PreferencesScreen>()
+            "LoginScreen" -> toRoute<LoginScreen>()
+            else -> null
+        }
+
+}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package com.example.a6starter.ui.screens.main
+package com.example.a6starter.ui.screens.main.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,15 +10,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class InfoScreenViewState(
-    val property1: Unit = TODO("Specify your Main Screen View State")
+data class UploadScreenViewState(
+    val favorites: List<String> = emptyList<String>(),
+    val allBreeds: List<DogBreed> = emptyList<DogBreed>()
 )
 
 @HiltViewModel
-class InfoScreenViewModel @Inject constructor(
+class MainScreenViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
     // FIXME - Placeholders
@@ -34,28 +34,23 @@ class InfoScreenViewModel @Inject constructor(
      * reflects the updated information.
      */
     // FIXME - Placeholders
-    val mainScreenViewState: StateFlow<MainScreenViewState> =
+    val uploadScreenViewState: StateFlow<UploadScreenViewState> =
         combine(favoritesFlow, allBreedsFlow) { favorites, allBreeds ->
             createViewState(favorites, allBreeds)
-        }.stateIn(viewModelScope, SharingStarted.Eagerly, MainScreenViewState())
-
-    init {
-        loadNextPage()
-    }
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, UploadScreenViewState())
 
     // FIXME - Placeholders
     private fun createViewState(
         favorites: List<String>,
         allBreeds: List<DogBreed>
-    ): MainScreenViewState {
-            TODO("Fill out this function to create your view state")
+    ): UploadScreenViewState {
+
+        return UploadScreenViewState(
+            favorites = favorites,
+            allBreeds = allBreeds
+        )
+
     }
 
-
-    // Don't make this function private, you will need to call it in MainScreen
-    //  when you get to the end of the page
-    // FIXME - Placeholders
-    fun loadNextPage() = viewModelScope.launch {
-        // TODO use dogRepository and currentPage to load the next page, updating allBreedsFlow
-    }
+    // TODO - Methods
 }

@@ -1,4 +1,4 @@
-package com.example.a6starter.ui.screens.main
+package com.example.a6starter.ui.screens.main.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a6starter.ui.theme.A6StarterTheme
+
+// TODO - make this communicate with the backend (in the viewmodel)
 
 @Composable
 fun LoginScreen() {
@@ -47,7 +49,7 @@ fun LoginScreen() {
                 }
             } else {
                 var name by remember { mutableStateOf("") }
-                var confirm_password by remember { mutableStateOf("")}
+                var confirmPassword by remember { mutableStateOf("")}
                 Text("Sign Up", fontSize = 30.sp)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Name: ")
@@ -69,8 +71,8 @@ fun LoginScreen() {
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Confirm Password: ")
-                    TextField(confirm_password,
-                        onValueChange = { confirm_password = it },
+                    TextField(confirmPassword,
+                        onValueChange = { confirmPassword = it },
                         placeholder = { Text("Confirm Password Here") })
                 }
                 Button(onClick = {

@@ -1,4 +1,4 @@
-package com.example.a6starter.ui.screens.main
+package com.example.a6starter.ui.screens.main.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a6starter.ui.theme.A6StarterTheme
+
+// TODO - make this display actually meaningful data (from the viewmodel)
 
 @Composable
 fun InfoScreen() {

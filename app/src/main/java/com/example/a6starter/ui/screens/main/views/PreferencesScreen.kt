@@ -1,4 +1,4 @@
-package com.example.a6starter.ui.screens.main
+package com.example.a6starter.ui.screens.main.views
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,6 +45,7 @@ fun PreferencesScreen() {
 
 @Composable
 fun CheckBox(boxString: String) {
+    // TODO - make this communicate with the backend (in the viewmodel)
     var isChecked by remember { mutableStateOf(false) }
     Row(
         verticalAlignment = Alignment.CenterVertically,
