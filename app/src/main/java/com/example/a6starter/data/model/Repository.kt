@@ -11,8 +11,14 @@ import javax.inject.Singleton
 class Repository @Inject constructor(
     private val api: Api,
 ) {
-    suspend fun getDogBreeds(netId: Int): Response<SPreferences> {
+    suspend fun getPreferences(netId: Int): Response<SPreferences> {
         return api.getStudentPreferences(netId);
+    }
+    suspend fun uploadSchedule(netId: Int, file: okhttp3.MultipartBody.Part): Response<Unit> {
+        return api.uploadSchedule(netId, file);
+    }
+    suspend fun updatePreferences(preferences: SPreferences): Response<Unit> {
+        return api.updatePreferences(preferences);
     }
 }
 //TODO ADD MORE API INTERACTIONS AS NEEDED

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class InfoScreenViewState(
@@ -46,4 +47,20 @@ class InfoScreenViewModel @Inject constructor(
     }
 
     // TODO - Methods
+    // Methods we might need.
+    private fun refreshData(){
+        viewModelScope.launch {
+            // We might need these extra repository interactions but maybe not.
+        //  val updatedPreferences = repository.getUserPreferences()
+        //  val updatedResults = repository.getMatchingResults()
+        }
+    }
+
+    /*
+    private fun updatePreferences(preferences: UserPreferences) {
+        viewModelScope.launch {
+            repository.updatePreferences(preferences)
+        }
+    }
+     */
 }

@@ -6,5 +6,6 @@ import com.squareup.moshi.Json
 data class SPreferences(
     val environment: String,
     val goal: String,
+    val locations: List<String>,
     val times: List<String>
 )
