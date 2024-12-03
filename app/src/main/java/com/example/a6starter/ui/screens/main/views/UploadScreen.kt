@@ -1,10 +1,10 @@
 package com.example.a6starter.ui.screens.main.views
 
-import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,6 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,7 +28,19 @@ import com.example.a6starter.ui.theme.A6StarterTheme
 
 @Composable
 fun UploadScreen() {
-    Box(modifier = Modifier.fillMaxSize().padding(20.dp), contentAlignment = Alignment.Center) {
+    val brush = Brush.verticalGradient(
+        listOf(
+            Color(96, 150, 253),
+            Color(170, 182, 251)
+        )
+    )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(brush)
+            .padding(20.dp),
+        contentAlignment = Alignment.Center
+    ) {
         FileSelector {
 
         }
@@ -45,7 +59,7 @@ fun UploadPreview() {
 @Composable
 fun FileSelector(onFileSelected: (Uri?) -> Unit) {
     val context = LocalContext.current
-    
+
     // Storing the file here.
     val selectedFile = remember { mutableStateOf<Uri?>(null) }
 
@@ -58,15 +72,19 @@ fun FileSelector(onFileSelected: (Uri?) -> Unit) {
             val mimeType = context.contentResolver.getType(uri)
             if (mimeType != "text/calendar") {
                 // Little pop-up message for the user letting them know what they selected is not valid.
-                Toast.makeText(context,
-                    "Please select a valid .ics file.", Toast.LENGTH_SHORT).apply {
-                        setGravity(android.view.Gravity.CENTER, 0, 0)
-                        show()
+                Toast.makeText(
+                    context,
+                    "Please select a valid .ics file.", Toast.LENGTH_SHORT
+                ).apply {
+                    setGravity(android.view.Gravity.CENTER, 0, 0)
+                    show()
                 }
                 selectedFile.value = null
-            }else{
-                Toast.makeText(context,
-                    "Please Wait!", Toast.LENGTH_SHORT).apply {
+            } else {
+                Toast.makeText(
+                    context,
+                    "Please Wait!", Toast.LENGTH_SHORT
+                ).apply {
                     setGravity(android.view.Gravity.CENTER, 0, 0)
                     show()
                 }
@@ -80,11 +98,15 @@ fun FileSelector(onFileSelected: (Uri?) -> Unit) {
     // Correct me if I'm wrong. (Maybe it is possible on the search engine in mobile
     // or other calendar services)
 
-    Button(onClick = {
-        launcher.launch(arrayOf("text/calendar", "application/octet-stream", "*/*"))
-    // MIME types like "application/pdf", "image/*", etc.
-    },
-        modifier = Modifier.padding(16.dp).shadow(8.dp, shape = RoundedCornerShape(12.dp))) {
+    Button(
+        onClick = {
+            launcher.launch(arrayOf("text/calendar", "application/octet-stream", "*/*"))
+            // MIME types like "application/pdf", "image/*", etc.
+        },
+        modifier = Modifier
+            .padding(16.dp)
+            .shadow(8.dp, shape = RoundedCornerShape(12.dp))
+    ) {
         Text(text = "Upload Schedule")
     }
 
