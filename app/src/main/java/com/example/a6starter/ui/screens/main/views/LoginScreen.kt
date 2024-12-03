@@ -34,7 +34,7 @@ fun LoginScreen() {
             Color(170, 182, 251)
         )
     )
-    var hasAccount by remember { mutableStateOf(false) }
+    var hasAccount by remember { mutableStateOf(true) }
     var netid by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("")}
     Box (modifier = Modifier.fillMaxSize()
@@ -46,13 +46,13 @@ fun LoginScreen() {
             verticalArrangement = Arrangement.spacedBy(20.dp)) {
             if(hasAccount) {
                 Text("Login", fontSize = 30.sp)
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Column {
                     Text("NetID: ")
                     TextField(netid,
                         onValueChange = { netid = it },
                         placeholder = { Text("Type NetID Here") })
                 }
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Column {
                     Text("Password: ")
                     TextField(password,
                         onValueChange = { password = it },
@@ -61,29 +61,32 @@ fun LoginScreen() {
                 Button(onClick = {/*TODO*/}) {
                     Text("Login")
                 }
+                Button(onClick = {hasAccount = false}) {
+                    Text("Don't Have An Account?")
+                }
             } else {
                 var name by remember { mutableStateOf("") }
                 var confirmPassword by remember { mutableStateOf("")}
                 Text("Sign Up", fontSize = 30.sp)
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Column {
                     Text("Name: ")
                     TextField(name,
                         onValueChange = { name = it },
                         placeholder = { Text("Type Name Here") })
                 }
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Column {
                     Text("NetID: ")
                     TextField(netid,
                         onValueChange = { netid = it },
                         placeholder = { Text("Type NetID Here") })
                 }
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Column {
                     Text("Password: ")
                     TextField(password,
                         onValueChange = { password = it },
                         placeholder = { Text("Type Password Here") })
                 }
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Column {
                     Text("Confirm Password: ")
                     TextField(confirmPassword,
                         onValueChange = { confirmPassword = it },
