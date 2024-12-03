@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavBackStackEntry
@@ -94,7 +95,7 @@ class MainActivity : ComponentActivity() {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
                 Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
-                    NavigationBar {
+                    NavigationBar(containerColor = Color(172, 201, 252)) {
                         tabs.map { item ->
                             NavigationBarItem(
                                 selected = currentRoute == item.screen::class.simpleName,
@@ -109,8 +110,9 @@ class MainActivity : ComponentActivity() {
 
                                 },
                                 icon = { Icon(painter = item.icon, contentDescription = null) },
-                                label = { Text(text = item.label) }
-                            )
+                                label = { Text(text = item.label) },
+
+                                )
                         }
                     }
                 }) { innerPadding ->

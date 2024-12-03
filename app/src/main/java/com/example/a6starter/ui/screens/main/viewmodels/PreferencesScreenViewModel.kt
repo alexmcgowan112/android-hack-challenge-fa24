@@ -48,4 +48,14 @@ class PreferencesScreenViewModel @Inject constructor(
     }
 
     // TODO - Functions
+    fun updatePreferences(
+        review: String,
+        homework: String,
+        morning: String,
+        afternoon: String,
+        evening: String
+    ) {
+        val newPreferences: String
+        newPreferences = review + homework + morning + afternoon + evening
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.a6starter.ui.screens.main.views
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,11 +28,22 @@ import com.example.a6starter.ui.theme.A6StarterTheme
 
 @Composable
 fun LoginScreen() {
+    val brush = Brush.verticalGradient(
+        listOf(
+            Color(96, 150, 253),
+            Color(170, 182, 251)
+        )
+    )
     var hasAccount by remember { mutableStateOf(false) }
     var netid by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("")}
-    Box (modifier = Modifier.fillMaxSize().padding(20.dp), contentAlignment = Alignment.Center) {
-        Column (horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(20.dp)) {
+    Box (modifier = Modifier.fillMaxSize()
+
+        .background(brush)
+        .padding(20.dp),
+        contentAlignment = Alignment.Center) {
+        Column (horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp)) {
             if(hasAccount) {
                 Text("Login", fontSize = 30.sp)
                 Row(verticalAlignment = Alignment.CenterVertically) {
