@@ -14,8 +14,8 @@ class Repository @Inject constructor(
     suspend fun getPreferences(netId: Int): Response<SPreferences> {
         return api.getStudentPreferences(netId);
     }
-    suspend fun uploadSchedule(netId: Int, file: okhttp3.MultipartBody.Part): Response<Unit> {
-        return api.uploadSchedule(netId, file);
+    suspend fun uploadSchedule(file: okhttp3.MultipartBody.Part): Response<Unit> {
+        return api.uploadSchedule(file);
     }
     suspend fun updatePreferences(preferences: SPreferences): Response<Unit> {
         return api.updatePreferences(preferences);

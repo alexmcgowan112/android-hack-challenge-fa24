@@ -22,7 +22,6 @@ interface Api {
     @POST("user/upload")
     @Multipart
     suspend fun uploadSchedule(
-        @Part("student[id]") netId: Int,
         @Part("file") file: okhttp3.MultipartBody.Part
     ): Response<Unit>
 

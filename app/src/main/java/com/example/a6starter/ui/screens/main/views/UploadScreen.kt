@@ -5,7 +5,10 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,6 +23,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.a6starter.ui.theme.A6StarterTheme
@@ -41,8 +49,14 @@ fun UploadScreen() {
             .padding(20.dp),
         contentAlignment = Alignment.Center
     ) {
-        FileSelector {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            FileSelector {
 
+            }
+            Hyperlink()
         }
     }
 }
@@ -93,10 +107,6 @@ fun FileSelector(onFileSelected: (Uri?) -> Unit) {
         }
     }
     // TODO: DO STUFF WITH FILE NOW
-    // You cannot get the ics file directly on the mobile app for GCAL
-    // They have to go to their computers and download it then send it to their mobile device.
-    // Correct me if I'm wrong. (Maybe it is possible on the search engine in mobile
-    // or other calendar services)
 
     Button(
         onClick = {
@@ -111,7 +121,49 @@ fun FileSelector(onFileSelected: (Uri?) -> Unit) {
     }
 
     selectedFile.value?.let {
-        Text(text = "Selected File: $it")
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(text = "Selected File:")
+            Text(text = "$it")
+        }
     }
 
 }
+
+@Composable
+fun Hyperlink() {
+    val annotatedString = buildAnnotatedString {
+        append("Need to Download Your Schedule?: ")
+        pushStringAnnotation(
+            tag = "URL",
+            annotation = "https://classes.cornell.edu/browse/roster/SP25"
+        )
+        withStyle(
+            style = SpanStyle(
+                color = Color.Blue,
+                textDecoration = TextDecoration.Underline
+            )
+        ) {
+            append("Click Here")
+        }
+        pop()
+    }
+
+    val uriHandler = LocalUriHandler.current
+
+    Text(
+        text = annotatedString,
+        modifier = Modifier.clickable {
+            // Handle clicks
+            annotatedString.getStringAnnotations(tag = "URL", start = 0, end = annotatedString.length)
+                .firstOrNull()?.let { annotation ->
+                    uriHandler.openUri(annotation.item)
+                }
+        },
+        style = androidx.compose.ui.text.TextStyle.Default
+    )
+}
+
