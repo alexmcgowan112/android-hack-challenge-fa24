@@ -22,5 +22,6 @@ class PreferencesScreenViewModel @Inject constructor(
         preferencesFlow.value = preferencesFlow.value.toMutableMap().apply {
             put(preferenceName, newState)
         }
+        // TODO - Update backend
     }
 }
