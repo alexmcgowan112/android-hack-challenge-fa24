@@ -24,10 +24,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.a6starter.ui.screens.main.viewmodels.LoginScreenViewModel
+import com.example.a6starter.ui.screens.main.viewmodels.PreferencesScreenViewModel
 import com.example.a6starter.ui.theme.Theme
 
 @Composable
-fun PreferencesScreen() {
+fun PreferencesScreen(preferencesScreenViewModel: PreferencesScreenViewModel = viewModel()) {
     val brush = Brush.verticalGradient(
         listOf(
             Color(96, 150, 253),
@@ -83,16 +86,20 @@ fun PreferencesScreen() {
 }
 
 @Composable
-fun CheckBox(boxString: String) {
+fun CheckBox(boxString: String, preferencesScreenViewModel: PreferencesScreenViewModel = viewModel()) {
     // TODO - make this communicate with the backend (in the viewmodel)
-    var isChecked by remember { mutableStateOf(false) }
+    var isChecked by remember { mutableStateOf( preferencesScreenViewModel.preferencesViewState[boxString] ?: false) }
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
         Checkbox(
             checked = isChecked,
-            onCheckedChange = { isChecked = it },
+            onCheckedChange = {
+                isChecked = it
+                preferencesScreenViewModel.updatePreference(boxString, isChecked)
+
+                              },
             //modifier = Modifier.weight(weight = 1.0f, fill = true)
 
             )

@@ -30,12 +30,16 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.a6starter.ui.screens.main.viewmodels.UploadScreenViewModel
 import com.example.a6starter.ui.theme.Theme
 
 // TODO - make this communicate with the backend (in the viewmodel)
 
 @Composable
-fun UploadScreen() {
+fun UploadScreen(
+//    uploadScreenViewModel: UploadScreenViewModel = viewModel()
+) {
     val brush = Brush.verticalGradient(
         listOf(
             Color(96, 150, 253),
@@ -107,6 +111,7 @@ fun FileSelector(onFileSelected: (Uri?) -> Unit) {
         }
     }
     // TODO: DO STUFF WITH FILE NOW
+    // uploadScreenViewModel.upload()
 
     Button(
         onClick = {

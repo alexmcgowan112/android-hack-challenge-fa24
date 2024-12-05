@@ -33,16 +33,16 @@ class InfoScreenViewModel @Inject constructor(
      * reflects the updated information.
      */
     // FIXME - Placeholders
-    val mainScreenViewState: StateFlow<UploadScreenViewState> =
+    val infoScreenViewState: StateFlow<InfoScreenViewState> =
         combine(favoritesFlow, allBreedsFlow) { favorites, allBreeds ->
             createViewState(favorites, allBreeds)
-        }.stateIn(viewModelScope, SharingStarted.Eagerly, UploadScreenViewState())
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, InfoScreenViewState())
 
     // FIXME - Placeholders
     private fun createViewState(
         favorites: List<String>,
         allBreeds: List<DogBreed>
-    ): UploadScreenViewState {
+    ): InfoScreenViewState {
             TODO("Fill out this function to create your view state")
     }
 
