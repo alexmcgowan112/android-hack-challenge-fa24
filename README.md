@@ -1,2 +1,5 @@
 # Team 17 Hack Challenge Frontend
-Right now this is just the starter code for assignment 6 of Intro to Android Development
+TODO
+- Main page viewmodel implementation
+- Test/placeholder data and layout for main page
+- Connect to the deployed backend (once that actually exists)
