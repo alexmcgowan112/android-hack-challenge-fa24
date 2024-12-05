@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.a6starter.ui.theme.A6StarterTheme
+import com.example.a6starter.ui.theme.Theme
 
 // TODO - make this display actually meaningful data (from the viewmodel)
 
@@ -89,7 +89,7 @@ fun ColumnCard(displayText: String) {
 @Preview(showBackground = true)
 @Composable
 fun InfoPreview() {
-    A6StarterTheme {
+    Theme {
         InfoScreen()
     }
 }

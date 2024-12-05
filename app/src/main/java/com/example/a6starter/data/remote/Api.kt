@@ -33,4 +33,7 @@ interface Api {
 
     // TODO specify your API
     // test
+    suspend fun login(
+        // TODO
+    ): Response<Unit>
 }

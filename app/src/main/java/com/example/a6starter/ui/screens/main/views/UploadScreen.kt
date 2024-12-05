@@ -30,7 +30,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.a6starter.ui.theme.A6StarterTheme
+import com.example.a6starter.ui.theme.Theme
 
 // TODO - make this communicate with the backend (in the viewmodel)
 
@@ -65,7 +65,7 @@ fun UploadScreen() {
 @Preview(showBackground = true)
 @Composable
 fun UploadPreview() {
-    A6StarterTheme {
+    Theme {
         UploadScreen()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.a6starter.ui.screens.main.viewmodels
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a6starter.data.entities.DogBreed
@@ -13,17 +14,17 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 data class LoginScreenViewState(
-    val favorites: List<String> = emptyList<String>(),
-    val allBreeds: List<DogBreed> = emptyList<DogBreed>()
+    val hasAccount: Boolean = true,
+    val errorMessage: String? = null
 )
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    private val repository: Repository,
+    // TODO - uncomment this
+//    private val repository: Repository,
 ) : ViewModel() {
-    // FIXME - Placeholders
-    private val favoritesFlow = MutableStateFlow(emptyList<String>())
-    private val allBreedsFlow = MutableStateFlow(emptyList<DogBreed>())
+    private val hasAccountFlow = MutableStateFlow(true)
+    private val errorMessageFlow = MutableStateFlow<String?>(null)
 
     /**
      * The current view state of the main screen.
@@ -32,24 +33,55 @@ class LoginScreenViewModel @Inject constructor(
      * Each time either of the flows update, we call `createViewState` to get a new view state that
      * reflects the updated information.
      */
-    // FIXME - Placeholders
     val loginScreenViewState: StateFlow<LoginScreenViewState> =
-        combine(favoritesFlow, allBreedsFlow) { favorites, allBreeds ->
-            createViewState(favorites, allBreeds)
+        combine(hasAccountFlow, errorMessageFlow) { hasAccount, errorMessage ->
+            createViewState(hasAccount, errorMessage)
         }.stateIn(viewModelScope, SharingStarted.Eagerly, LoginScreenViewState())
 
-    // FIXME - Placeholders
     private fun createViewState(
-        favorites: List<String>,
-        allBreeds: List<DogBreed>
+        hasAccount: Boolean,
+        errorMessage: String?
     ): LoginScreenViewState {
 
         return LoginScreenViewState(
-            favorites = favorites,
-            allBreeds = allBreeds
+            hasAccount = hasAccount,
+            errorMessage = errorMessage
         )
 
     }
 
-    // TODO - Methods
+    fun login(sharedPreferences: SharedPreferences, netid: String, password: String) {
+        if (listOf(netid, password).any { it.isEmpty() }) {
+            errorMessageFlow.value = "One or more fields are empty!"
+        } else {
+            errorMessageFlow.value = null
+
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("LOGGED_IN", true)
+            editor.apply()
+
+            // TODO
+        }
+    }
+
+    fun noAccount() {
+        hasAccountFlow.value = false
+    }
+
+    fun signup(sharedPreferences: SharedPreferences, name: String, netid: String, password: String, confirmPassword:String) {
+        if (listOf(netid, name, password, confirmPassword).any { it.isEmpty() }) {
+            errorMessageFlow.value = "One or more fields are empty!"
+        } else if (password != confirmPassword) {
+            errorMessageFlow.value = "Passwords do not match!"
+        } else {
+            errorMessageFlow.value = null
+            hasAccountFlow.value = true
+
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("LOGGED_IN", true)
+            editor.apply()
+
+            // TODO
+        }
+    }
 }
