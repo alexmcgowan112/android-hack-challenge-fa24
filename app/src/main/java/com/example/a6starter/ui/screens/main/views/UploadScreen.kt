@@ -1,6 +1,7 @@
 package com.example.a6starter.ui.screens.main.views
 
 import android.net.Uri
+
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,16 +31,16 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.a6starter.ui.screens.main.viewmodels.UploadScreenViewModel
 import com.example.a6starter.ui.theme.Theme
+import androidx.hilt.navigation.compose.hiltViewModel
 
 // TODO - make this communicate with the backend (in the viewmodel)
 
 @Composable
-fun UploadScreen(
-//    uploadScreenViewModel: UploadScreenViewModel = viewModel()
-) {
+fun UploadScreen(viewModel: UploadScreenViewModel = hiltViewModel()) {
+    val context = LocalContext.current
+
     val brush = Brush.verticalGradient(
         listOf(
             Color(96, 150, 253),
@@ -57,9 +58,11 @@ fun UploadScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            FileSelector {
-
-            }
+            FileSelector(
+                onFileSelected = { uri ->
+                    viewModel.uploadFile(uri, context)
+                }
+            )
             Hyperlink()
         }
     }
@@ -110,13 +113,10 @@ fun FileSelector(onFileSelected: (Uri?) -> Unit) {
             }
         }
     }
-    // TODO: DO STUFF WITH FILE NOW
-    // uploadScreenViewModel.upload()
 
     Button(
         onClick = {
             launcher.launch(arrayOf("text/calendar", "application/octet-stream", "*/*"))
-            // MIME types like "application/pdf", "image/*", etc.
         },
         modifier = Modifier
             .padding(16.dp)
