@@ -1,6 +1,5 @@
 package com.example.a6starter.data.model
 
-import com.example.a6starter.data.entities.DogEntity
 import com.example.a6starter.data.entities.SPreferences
 import com.example.a6starter.data.remote.Api
 import okhttp3.MultipartBody
@@ -15,6 +14,7 @@ class Repository @Inject constructor(
     suspend fun getPreferences(netId: Int): Response<SPreferences> {
         return api.getStudentPreferences(netId);
     }
+
     suspend fun uploadSchedule(file: MultipartBody.Part): Boolean {
         return try {
             val response = api.uploadSchedule(file)
@@ -23,7 +23,8 @@ class Repository @Inject constructor(
             false
         }
     }
-    suspend fun updatePreferences(preferences: SPreferences): Response<Unit> {
+
+    suspend fun updatePreferences(preferences: SPreferences): Response<Map<String, Any>> {
         return api.updatePreferences(preferences);
     }
 }

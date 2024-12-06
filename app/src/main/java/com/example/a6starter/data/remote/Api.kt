@@ -30,7 +30,7 @@ interface Api {
     @POST("preferences/update")
     suspend fun updatePreferences(
         @Body preferences: SPreferences
-    ): Response<Unit>
+    ): Response<Map<String, Any>>
 
     // TODO specify your API
     // test
