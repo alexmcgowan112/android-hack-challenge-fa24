@@ -31,6 +31,33 @@ class PreferencesScreenViewModel @Inject constructor(
     )
     val preferences = preferencesFlow.asStateFlow()
 
+    fun fetchPreferences(netId: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.getPreferences(netId)
+                if (response.isSuccessful) {
+                    val fetchedPreferences = response.body()
+                    preferencesFlow.value = fetchedPreferences ?: SPreferences(
+                        location_north = false,
+                        location_south = false,
+                        location_central = false,
+                        location_west = false,
+                        time_morning = false,
+                        time_afternoon = false,
+                        time_evening = false,
+                        objective_study = false,
+                        objective_homework = false
+                    )
+                } else {
+                    println("Error fetching preferences")
+                }
+            } catch (e: Exception) {
+
+                println("Error fetching preferences")
+            }
+        }
+    }
+
     fun updatePreference(field: String, value: Boolean) {
         val updatedPreferences = preferencesFlow.value.copy(
             location_north = if (field == "location_north") value else preferencesFlow.value.location_north,

@@ -41,6 +41,9 @@ fun PreferencesScreen(viewModel: PreferencesScreenViewModel = viewModel()) {
 
             Spacer(modifier = Modifier.height(30.dp))
             Text(text = "Study Session Objective:", color = Color.White)
+
+            // ?: will return false if the variable before it is null (i think)
+
             CheckBox("Study", preferences.objective_study ?: false) {
                 viewModel.updatePreference("objective_study", it)
             }

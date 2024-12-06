@@ -16,7 +16,7 @@ interface Api {
     // Get student preferences (GET request for student preferences)
     @GET("preferences")
     suspend fun getStudentPreferences(
-        @Query("student[id]") netId: Int
+        @Query("student[id]") netId: String
     ): Response<SPreferences>
 
     // Upload schedule (POST request for .ics file)

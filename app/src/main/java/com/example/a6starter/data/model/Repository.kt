@@ -11,7 +11,7 @@ import javax.inject.Singleton
 class Repository @Inject constructor(
     private val api: Api,
 ) {
-    suspend fun getPreferences(netId: Int): Response<SPreferences> {
+    suspend fun getPreferences(netId: String): Response<SPreferences> {
         return api.getStudentPreferences(netId);
     }
 
