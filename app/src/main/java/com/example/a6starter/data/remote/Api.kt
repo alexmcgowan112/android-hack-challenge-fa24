@@ -1,6 +1,7 @@
 package com.example.a6starter.data.remote
 
 import com.example.a6starter.data.entities.SPreferences
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -22,7 +23,7 @@ interface Api {
     @POST("user/upload")
     @Multipart
     suspend fun uploadSchedule(
-        @Part("file") file: okhttp3.MultipartBody.Part
+        @Part file: MultipartBody.Part
     ): Response<Unit>
 
     // Update user preferences

@@ -3,6 +3,7 @@ package com.example.a6starter.data.model
 import com.example.a6starter.data.entities.DogEntity
 import com.example.a6starter.data.entities.SPreferences
 import com.example.a6starter.data.remote.Api
+import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,8 +15,13 @@ class Repository @Inject constructor(
     suspend fun getPreferences(netId: Int): Response<SPreferences> {
         return api.getStudentPreferences(netId);
     }
-    suspend fun uploadSchedule(file: okhttp3.MultipartBody.Part): Response<Unit> {
-        return api.uploadSchedule(file);
+    suspend fun uploadSchedule(file: MultipartBody.Part): Boolean {
+        return try {
+            val response = api.uploadSchedule(file)
+            response.isSuccessful
+        } catch (e: Exception) {
+            false
+        }
     }
     suspend fun updatePreferences(preferences: SPreferences): Response<Unit> {
         return api.updatePreferences(preferences);

@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.moshi.kotlin)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.kotlinx.serialization.json)
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
 
 // Allow references to generated code
