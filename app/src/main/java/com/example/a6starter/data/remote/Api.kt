@@ -12,6 +12,7 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -58,8 +59,7 @@ interface Api {
     ): Response<messageResponse>
 
     @GET("search")
-    suspend fun searchResults(
-    ): Response<matchesFound>
+    suspend fun searchResults(): Response<matchesFound>
 
     @GET("preferences")
     suspend fun getPreferences(

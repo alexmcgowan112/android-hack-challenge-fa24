@@ -7,9 +7,27 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Cookie
+import okhttp3.CookieJar
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
+
+class AuthCookieJar : CookieJar {
+    private val cookieStore = mutableMapOf<String, MutableList<Cookie>>()
+
+    override fun loadForRequest(url: HttpUrl): List<Cookie> {
+        // Return stored cookies for the given URL
+        return cookieStore[url.host] ?: mutableListOf()
+    }
+
+    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+        // Save the cookies from the response
+        cookieStore[url.host] = cookies.toMutableList()
+    }
+}
 
 /**
  * This is the AppModule. This handles dependency injection with Dagger Hilt for you, so you do not
@@ -32,9 +50,16 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMyApi(moshi: Moshi): Api {
+        val cookieJar = AuthCookieJar()
+
+        val client = OkHttpClient.Builder()
+            .cookieJar(cookieJar)
+            .build()
+
         return Retrofit.Builder()
             .baseUrl("http://34.86.243.184:8000/api/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(client)
             .build()
             .create(Api::class.java)
     }

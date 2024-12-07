@@ -1,5 +1,6 @@
 package com.example.a6starter.ui.screens.main.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a6starter.data.entities.GPreferences
@@ -55,7 +56,8 @@ class PreferencesScreenViewModel @Inject constructor(
                             study = false,
                             homework = false
                         )
-                        preferencesFlow.value = fetchedPreferences as SPreferences
+                        preferencesFlow.value = SPreferences(fetchedPreferences)
+                        Log.d("Load Preferences", (response.errorBody()?.string() ?: "Success").toString())
                     }
 
                     response.code() == 401 -> {
@@ -78,6 +80,7 @@ class PreferencesScreenViewModel @Inject constructor(
             } catch (e: Exception) {
 
                 _errorFlow.value = "Error: ${e.message ?: "Unknown error occurred"}"
+                Log.e("Preferences Error", e.message ?: "Unknown")
             }
         }
     }

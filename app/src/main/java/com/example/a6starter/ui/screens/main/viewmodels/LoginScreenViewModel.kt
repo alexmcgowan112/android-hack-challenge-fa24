@@ -1,8 +1,6 @@
 package com.example.a6starter.ui.screens.main.viewmodels
 
-import android.content.SharedPreferences
 import android.util.Log
-import android.util.Log.e
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a6starter.data.model.Repository
@@ -64,6 +62,7 @@ class LoginScreenViewModel @Inject constructor(
                     val response = repository.login(netid, password)
                     when{
                         response.isSuccessful -> {
+
                             navigateToMainScreens()
                         }
                         response.code() == 400 -> {

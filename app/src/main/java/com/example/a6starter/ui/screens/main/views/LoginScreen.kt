@@ -1,7 +1,5 @@
 package com.example.a6starter.ui.screens.main.views
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

@@ -1,6 +1,5 @@
 package com.example.a6starter.ui.screens.main.viewmodels
 
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a6starter.data.model.Repository

@@ -1,7 +1,6 @@
 package com.example.a6starter.ui.screens.main.views
 
 import android.net.Uri
-
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import com.example.a6starter.ui.screens.main.viewmodels.UploadScreenViewModel
 import com.example.a6starter.ui.theme.Theme
 import androidx.hilt.navigation.compose.hiltViewModel
-
 
 @Composable
 fun UploadScreen(viewModel: UploadScreenViewModel = hiltViewModel()) {

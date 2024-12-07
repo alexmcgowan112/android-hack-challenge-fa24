@@ -1,6 +1,5 @@
 package com.example.a6starter.ui.screens.main.views
 
-import android.graphics.fonts.FontStyle
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -29,7 +28,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.a6starter.ui.screens.main.viewmodels.PreferencesScreenViewModel
 import com.example.a6starter.ui.theme.Theme
-import java.time.format.TextStyle
 
 @Composable
 fun PreferencesScreen(viewModel: PreferencesScreenViewModel = hiltViewModel()) {
