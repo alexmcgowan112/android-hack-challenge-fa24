@@ -81,9 +81,9 @@ fun Login(navigateToMainScreens: () -> Unit, loginScreenViewModel: LoginScreenVi
 
     Text("Login", fontSize = 30.sp)
 
-    TextFieldWithLabel("NetID: ", netid, { netid = it }, "Type NetID Here")
+    TextFieldWithLabel("NetID: ", netid, { netid = sanitizeString(it) }, "Type NetID Here")
 
-    TextFieldWithLabel("Password: ", password, { password = it }, "Type Password Here")
+    TextFieldWithLabel("Password: ", password, { password = sanitizeString(it) }, "Type Password Here")
 
     ErrorMessage(loginScreenViewModel.loginScreenViewState.collectAsState().value.errorMessage)
 
@@ -104,13 +104,13 @@ fun Signup(navigateToMainScreens: () -> Unit, loginScreenViewModel: LoginScreenV
 
     Text("Sign Up", fontSize = 30.sp)
 
-    TextFieldWithLabel("Name:", name, { name = it }, "Type Name Here")
+    TextFieldWithLabel("Name:", name, { name = sanitizeString(it) }, "Type Name Here")
 
-    TextFieldWithLabel("NetID:", netid, { netid = it }, "Type NetID Here")
+    TextFieldWithLabel("NetID:", netid, { netid = sanitizeString(it) }, "Type NetID Here")
 
-    TextFieldWithLabel("Password:", password, { password = it }, "Type Password Here")
+    TextFieldWithLabel("Password:", password, { password = sanitizeString(it) }, "Type Password Here")
 
-    TextFieldWithLabel("Confirm Password:", confirmPassword, { confirmPassword = it }, "Confirm Password Here")
+    TextFieldWithLabel("Confirm Password:", confirmPassword, { confirmPassword = sanitizeString(it) }, "Confirm Password Here")
 
     ErrorMessage(loginScreenViewModel.loginScreenViewState.collectAsState().value.errorMessage)
 
@@ -121,4 +121,8 @@ fun Signup(navigateToMainScreens: () -> Unit, loginScreenViewModel: LoginScreenV
     Button(onClick = {loginScreenViewModel.hasAccount()}) {
         Text("Already Have An Account?")
     }
+}
+
+fun sanitizeString(input: String): String {
+    return input.replace(" ", "").replace("\n", "")
 }

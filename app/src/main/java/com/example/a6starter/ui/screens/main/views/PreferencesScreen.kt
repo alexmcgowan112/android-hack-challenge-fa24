@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
@@ -44,61 +46,71 @@ fun PreferencesScreen(viewModel: PreferencesScreenViewModel = hiltViewModel()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(listOf(Color(96, 150, 253), Color(170, 182, 251)))),
+            .background(Brush.verticalGradient(listOf(Color(96, 150, 253), Color(170, 182, 251))))
+            .padding(30.dp),
         contentAlignment = Alignment.Center
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Set Your Preferences", fontSize = 30.sp, color = Color.White, style = androidx.compose.ui.text.TextStyle(shadow = Shadow(color = Color.Black, offset = Offset(5f, 10f), blurRadius = 19f)))
+        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
 
-            Spacer(modifier = Modifier.height(30.dp))
-            Text(text = "Study Session Objective:", color = Color.White)
+            item {
+                Text(
+                    text = "Set Your Preferences",
+                    fontSize = 30.sp,
+                    color = Color.White,
+                    style = androidx.compose.ui.text.TextStyle(
+                        shadow = Shadow(
+                            color = Color.Black,
+                            offset = Offset(5f, 10f),
+                            blurRadius = 19f
+                        )
+                    )
+                )
 
+                Spacer(modifier = Modifier.height(30.dp))
+                Text(text = "Study Session Objective:", color = Color.White)
 
+                CheckBox("Study", preferences.objective_study ?: false) {
+                    viewModel.updatePreference("objective_study", it)
+                }
+                CheckBox("Homework", preferences.objective_homework ?: false) {
+                    viewModel.updatePreference("objective_homework", it)
+                }
 
-            CheckBox("Study", preferences.objective_study ?: false) {
-                viewModel.updatePreference("objective_study", it)
-            }
-            CheckBox("Homework", preferences.objective_homework ?: false) {
-                viewModel.updatePreference("objective_homework", it)
-            }
+                Spacer(modifier = Modifier.height(20.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
+                Text(text = "Preferred Time(s):", color = Color.White)
+                CheckBox("Morning", preferences.time_morning ?: false) {
+                    viewModel.updatePreference("time_morning", it)
+                }
+                CheckBox("Afternoon", preferences.time_afternoon ?: false) {
+                    viewModel.updatePreference("time_afternoon", it)
+                }
+                CheckBox("Evening", preferences.time_evening ?: false) {
+                    viewModel.updatePreference("time_evening", it)
+                }
 
-            Text(text = "Preferred Time(s):", color = Color.White)
-            CheckBox("Morning", preferences.time_morning ?: false) {
-                viewModel.updatePreference("time_morning", it)
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(text = "Preferred Location(s):", color = Color.White)
+                CheckBox("Central", preferences.location_central ?: false) {
+                    viewModel.updatePreference("location_central", it)
+                }
+                CheckBox("North", preferences.location_north ?: false) {
+                    viewModel.updatePreference("location_north", it)
+                }
+                CheckBox("West", preferences.location_west ?: false) {
+                    viewModel.updatePreference("location_west", it)
+                }
+                CheckBox("South", preferences.location_south ?: false) {
+                    viewModel.updatePreference("location_south", it)
+                }
             }
-            CheckBox("Afternoon", preferences.time_afternoon ?: false) {
-                viewModel.updatePreference("time_afternoon", it)
-            }
-            CheckBox("Evening", preferences.time_evening ?: false) {
-                viewModel.updatePreference("time_evening", it)
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(text = "Preferred Location(s):", color = Color.White)
-            CheckBox("Central", preferences.location_central ?: false) {
-                viewModel.updatePreference("location_central", it)
-            }
-            CheckBox("North", preferences.location_north ?: false) {
-                viewModel.updatePreference("location_north", it)
-            }
-            CheckBox("West", preferences.location_west ?: false) {
-                viewModel.updatePreference("location_west", it)
-            }
-            CheckBox("South", preferences.location_south ?: false) {
-                viewModel.updatePreference("location_south", it)
-            }
-
-            Spacer(modifier = Modifier.height(40.dp))
-            UpdatePreferences()
         }
     }
 }
 
 @Composable
 fun CheckBox(field: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.height(40.dp)) {
         Checkbox(
             checked = isChecked,
             onCheckedChange = onCheckedChange
@@ -106,18 +118,6 @@ fun CheckBox(field: String, isChecked: Boolean, onCheckedChange: (Boolean) -> Un
         Text(text = field, color = Color.White)
     }
 }
-
-@Composable
-fun UpdatePreferences() {
-    val context = LocalContext.current
-    Button(onClick = {
-
-        Toast.makeText(context, "Successfully updated preferences", Toast.LENGTH_SHORT).show()
-    }) {
-        Text("Update Preferences")
-    }
-}
-
 
 @Preview(showBackground = true)
 @Composable

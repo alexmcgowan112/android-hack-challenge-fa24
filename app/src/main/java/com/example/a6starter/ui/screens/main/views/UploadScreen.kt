@@ -141,7 +141,7 @@ fun Hyperlink() {
         append("Need to Download Your Schedule?: ")
         pushStringAnnotation(
             tag = "URL",
-            annotation = "https://classes.cornell.edu/browse/roster/SP25"
+            annotation = "https://classes.cornell.edu/scheduler/roster/SP25"
         )
         withStyle(
             style = SpanStyle(
