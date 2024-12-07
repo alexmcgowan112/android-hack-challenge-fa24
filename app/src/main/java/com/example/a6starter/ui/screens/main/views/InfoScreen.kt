@@ -29,8 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.a6starter.data.entities.matchInfo
 import com.example.a6starter.ui.screens.main.viewmodels.InfoScreenViewModel
 import com.example.a6starter.ui.theme.Theme
-
-// TODO - make this display actually meaningful data (from the viewmodel)
+import java.util.Locale
 
 @Composable
 fun InfoScreen(infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
@@ -116,7 +115,7 @@ fun MatchCard(match: matchInfo, onContactBuddy: (String) -> Unit) {
 
 
             Text(
-                text = "Match Score: ${String.format("%.2f", match.match_score * 100)}%",
+                text = "Match Score: ${String.format(Locale.US, "%.2f", match.match_score * 100)}%",
                 color = Color.White,
                 modifier = Modifier.padding(top = 8.dp)
             )

@@ -43,8 +43,6 @@ class InfoScreenViewModel @Inject constructor(
     // Methods we might need.
     private fun refreshData(){
         viewModelScope.launch {
-            // We might need these extra repository interactions but maybe not.
-        //  val updatedPreferences = repository.getUserPreferences()
             val updatedResults = repository.getSearchResults()
             matchesFlow.update { updatedResults.body()?.matches ?: emptyList<matchInfo>()}
         }
@@ -81,11 +79,4 @@ class InfoScreenViewModel @Inject constructor(
         }
 
     }
-    /*
-    private fun updatePreferences(preferences: UserPreferences) {
-        viewModelScope.launch {
-            repository.updatePreferences(preferences)
-        }
-    }
-     */
 }
