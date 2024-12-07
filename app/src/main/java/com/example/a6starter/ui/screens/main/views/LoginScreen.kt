@@ -25,13 +25,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.a6starter.ui.screens.main.viewmodels.LoginScreenViewModel
 import com.example.a6starter.ui.theme.Theme
 
 @Composable
 fun LoginScreen(
-    loginScreenViewModel: LoginScreenViewModel = viewModel(),
+    loginScreenViewModel: LoginScreenViewModel = hiltViewModel(),
     sharedPreferences: SharedPreferences = LocalContext.current.getSharedPreferences(
         "LOGGED_IN",
         Context.MODE_PRIVATE
@@ -87,7 +87,6 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, sharedPreferences: SharedP
     var netid by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-
     Text("Login", fontSize = 30.sp)
 
     TextFieldWithLabel("NetID: ", netid, { netid = it }, "Type NetID Here")
@@ -125,6 +124,10 @@ fun Signup(loginScreenViewModel: LoginScreenViewModel, sharedPreferences: Shared
 
     Button(onClick = {loginScreenViewModel.signup(sharedPreferences, name, netid, password, confirmPassword)}) {
         Text("Sign Up")
+    }
+
+    Button(onClick = {loginScreenViewModel.hasAccount()}) {
+        Text("Already Have An Account?")
     }
 }
 

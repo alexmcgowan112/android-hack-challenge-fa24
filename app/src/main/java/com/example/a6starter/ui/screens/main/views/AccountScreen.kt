@@ -19,12 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.a6starter.ui.screens.main.viewmodels.AccountScreenViewModel
 
 @Composable
 fun AccountScreen(
-    accountScreenViewModel: AccountScreenViewModel = viewModel(),
+    accountScreenViewModel: AccountScreenViewModel = hiltViewModel(),
     sharedPreferences: SharedPreferences = LocalContext.current.getSharedPreferences(
         "LOGGED_IN",
         Context.MODE_PRIVATE

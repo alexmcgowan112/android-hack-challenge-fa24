@@ -148,8 +148,8 @@ fun NavigableScreens() {
                         }
 
                     },
-                    icon = { Icon(painter = item.icon, contentDescription = null) },
-                    label = { Text(text = item.label) },
+                    icon = { Icon(painter = item.icon, contentDescription = null, tint = Color.Black) },
+                    label = { Text(text = item.label, color = Color.Black) },
 
                     )
             }
