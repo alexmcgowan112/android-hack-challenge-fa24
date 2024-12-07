@@ -80,6 +80,9 @@ class InfoScreenViewModel @Inject constructor(
                 )
             }
         }
+        fun resetEmailSendState() {
+            _emailSendState.value = EmailSendState.Idle
+        }
 
     }
     /*
