@@ -23,12 +23,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.a6starter.ui.screens.main.viewmodels.PreferencesScreenViewModel
 import com.example.a6starter.ui.theme.Theme
 
 @Composable
-fun PreferencesScreen(viewModel: PreferencesScreenViewModel = viewModel()) {
+fun PreferencesScreen(viewModel: PreferencesScreenViewModel = hiltViewModel()) {
     val preferences by viewModel.preferences.collectAsState()
     val error by viewModel.errorFlow.collectAsState()
     val context = LocalContext.current

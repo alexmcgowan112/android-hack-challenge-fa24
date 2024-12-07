@@ -22,12 +22,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.a6starter.ui.screens.main.viewmodels.InfoScreenViewModel
+import com.example.a6starter.ui.screens.main.viewmodels.LoginScreenViewModel
 import com.example.a6starter.ui.theme.Theme
 
 // TODO - make this display actually meaningful data (from the viewmodel)
 
 @Composable
-fun InfoScreen() {
+fun InfoScreen(infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
     val brush = Brush.verticalGradient(
         listOf(
             Color(96, 150, 253),

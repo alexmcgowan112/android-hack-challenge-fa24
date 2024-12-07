@@ -34,7 +34,7 @@ object AppModule {
     fun provideMyApi(moshi: Moshi): Api {
         // FIXME - Change Base URL
         return Retrofit.Builder()
-            .baseUrl("https://dogapi.dog/api/v2/")
+            .baseUrl("http://34.86.243.184:8000/api/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(Api::class.java)

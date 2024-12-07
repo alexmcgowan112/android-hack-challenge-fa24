@@ -20,8 +20,7 @@ data class LoginScreenViewState(
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    // TODO - uncomment this
-//    private val repository: Repository,
+    private val repository: Repository,
 ) : ViewModel() {
     private val hasAccountFlow = MutableStateFlow(true)
     private val errorMessageFlow = MutableStateFlow<String?>(null)
@@ -66,6 +65,10 @@ class LoginScreenViewModel @Inject constructor(
 
     fun noAccount() {
         hasAccountFlow.value = false
+    }
+
+    fun hasAccount() {
+        hasAccountFlow.value = true
     }
 
     fun signup(sharedPreferences: SharedPreferences, name: String, netid: String, password: String, confirmPassword:String) {
