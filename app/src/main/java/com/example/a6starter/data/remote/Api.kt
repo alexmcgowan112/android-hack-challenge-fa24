@@ -15,9 +15,9 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface Api {
-    // TODO Deal with the possibilities or receiving error bodies from backend as responses.
     // Upload schedule (POST request for .ics file)
     @POST("user/upload")
     @Multipart
@@ -41,9 +41,9 @@ interface Api {
         @Body loginRequest: loginUser
     ): Response<userResponse>
 
-    @GET("users/<netid>")
+    Copy@GET("users/{netid}/")
     suspend fun getUser(
-        @Body netid: String
+        @Path("netid") netid: String
     ): Response<userResponse>
 
     // Some extra brain juice is needed for this one.

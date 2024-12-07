@@ -73,7 +73,7 @@ class LoginScreenViewModel @Inject constructor(
                             errorMessageFlow.value = "User not found"
                         }
                         else -> {
-                            errorMessageFlow.value = "Login failed"
+                            errorMessageFlow.value = "Login failed ${response.code()}"
                         }
                     }
 

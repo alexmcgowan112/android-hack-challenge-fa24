@@ -32,7 +32,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMyApi(moshi: Moshi): Api {
-        // FIXME - Change Base URL
         return Retrofit.Builder()
             .baseUrl("http://34.86.243.184:8000/api/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
