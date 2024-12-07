@@ -2,10 +2,12 @@ package com.example.a6starter.ui.screens.main.viewmodels
 
 import android.content.SharedPreferences
 import android.util.Log
+import android.util.Log.e
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a6starter.data.model.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -57,11 +59,28 @@ class LoginScreenViewModel @Inject constructor(
             errorMessageFlow.value = null
 
             viewModelScope.launch {
-                val response = repository.login(netid, password)
-                Log.d("Login Response", response.errorBody()?.string() ?: "Success")
-            }
+                try{
+                    delay(500)
+                    val response = repository.login(netid, password)
+                    when{
+                        response.isSuccessful -> {
+                            navigateToMainScreens()
+                        }
+                        response.code() == 400 -> {
+                            errorMessageFlow.value = "Invalid credentials"
+                        }
+                        response.code() == 404 -> {
+                            errorMessageFlow.value = "User not found"
+                        }
+                        else -> {
+                            errorMessageFlow.value = "Login failed"
+                        }
+                    }
 
-            navigateToMainScreens()
+                }catch(e: Exception){
+                    Log.d("Login Error", e.message ?: "Unknown error")
+                }
+            }
         }
     }
 

@@ -35,7 +35,6 @@ import com.example.a6starter.ui.screens.main.viewmodels.UploadScreenViewModel
 import com.example.a6starter.ui.theme.Theme
 import androidx.hilt.navigation.compose.hiltViewModel
 
-// TODO - make this communicate with the backend (in the viewmodel)
 
 @Composable
 fun UploadScreen(viewModel: UploadScreenViewModel = hiltViewModel()) {
