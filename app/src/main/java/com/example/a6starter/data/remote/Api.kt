@@ -41,7 +41,7 @@ interface Api {
         @Body loginRequest: loginUser
     ): Response<userResponse>
 
-    Copy@GET("users/{netid}/")
+    @GET("users/{netid}")
     suspend fun getUser(
         @Path("netid") netid: String
     ): Response<userResponse>
