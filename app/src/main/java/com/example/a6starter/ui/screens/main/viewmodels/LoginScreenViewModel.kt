@@ -1,13 +1,11 @@
 package com.example.a6starter.ui.screens.main.viewmodels
 
 import android.content.SharedPreferences
-import androidx.compose.runtime.rememberCoroutineScope
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a6starter.data.model.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -58,13 +56,15 @@ class LoginScreenViewModel @Inject constructor(
         } else {
             errorMessageFlow.value = null
 
+            // Tell MainActivity to change screens
             val editor = sharedPreferences.edit()
             editor.putBoolean("LOGGED_IN", true)
             editor.apply()
 
             // TODO
             viewModelScope.launch {
-                repository.login(netid, password)
+                val response = repository.login(netid, password)
+                Log.d("Login Response", response.errorBody()?.string() ?: "Success")
             }
 
         }
@@ -87,13 +87,16 @@ class LoginScreenViewModel @Inject constructor(
             errorMessageFlow.value = null
             hasAccountFlow.value = true
 
-            val editor = sharedPreferences.edit()
-            editor.putBoolean("LOGGED_IN", true)
-            editor.apply()
-
             // TODO
             viewModelScope.launch {
-                repository.signup(name, netid, password, confirmPassword)
+                val response = repository.signup(name, netid, password, confirmPassword)
+                if(response.isSuccessful) {
+                    Log.d("Signup Success Code", response.code().toString())
+                } else {
+                    Log.d("Signup Error Message", response.errorBody()?.string() ?: "Null")
+                }
+//                repository.hasAccount()
+//                repository.login(sharedPreferences, netid, password)
             }
         }
     }

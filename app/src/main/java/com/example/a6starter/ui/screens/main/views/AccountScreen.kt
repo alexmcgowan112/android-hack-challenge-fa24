@@ -49,7 +49,7 @@ fun AccountScreen(
             verticalArrangement = Arrangement.spacedBy(20.dp)) {
 
             Column (horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Hello ${currentViewState}!", fontSize = 30.sp)
+                Text("Hello!", fontSize = 30.sp)
                 Button(onClick = { accountScreenViewModel.logout(sharedPreferences) }) {
                     Text("Log Out")
                 }

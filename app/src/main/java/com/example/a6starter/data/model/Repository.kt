@@ -7,6 +7,7 @@ import com.example.a6starter.data.entities.loginUser
 import com.example.a6starter.data.entities.matchesFound
 import com.example.a6starter.data.entities.messageResponse
 import com.example.a6starter.data.entities.newUser
+import com.example.a6starter.data.entities.userResponse
 import com.example.a6starter.data.remote.Api
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -40,16 +41,16 @@ class Repository @Inject constructor(
         return api.searchResults()
     }
 
-    suspend fun login(netid: String, password: String) {
-        api.loginUser(loginUser(netid, password))
+    suspend fun login(netid: String, password: String): Response<userResponse>  {
+        return api.loginUser(loginUser(netid, password))
     }
 
-    suspend fun signup(name: String, netId: String, password: String, confirmPassword: String) {
-        api.createUser(newUser(name, netId, password, confirmPassword))
+    suspend fun signup(name: String, netId: String, password: String, confirmPassword: String): Response<userResponse> {
+        return api.createUser(newUser(name, netId, password, confirmPassword))
     }
 
-    suspend fun logout() {
-        api.logoutUser()
+    suspend fun logout(): Response<messageResponse> {
+        return api.logoutUser()
     }
 }
 //TODO ADD MORE API INTERACTIONS AS NEEDED
