@@ -15,7 +15,6 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
-import retrofit2.http.Path
 
 interface Api {
     // TODO Deal with the possibilities or receiving error bodies from backend as responses.

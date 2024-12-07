@@ -14,7 +14,7 @@ class Repository @Inject constructor(
     private val api: Api,
 ) {
     suspend fun getPreferences(): Response<GPreferences> {
-        return api.getStudentPreferences();
+        return api.getPreferences();
     }
 
     suspend fun uploadSchedule(file: MultipartBody.Part): Boolean {
