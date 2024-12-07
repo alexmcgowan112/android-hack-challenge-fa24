@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -31,6 +33,8 @@ import com.example.a6starter.ui.theme.Theme
 
 @Composable
 fun InfoScreen(infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
+    val currentViewState = infoScreenViewModel.matchesViewState.collectAsState().value
+
     val brush = Brush.verticalGradient(
         listOf(
             Color(96, 150, 253),
@@ -55,8 +59,8 @@ fun InfoScreen(infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
                 color = Color.White
             )
             LazyColumn(state = lazyListState) {
-                items(100) { index ->
-                    ColumnCard(index.toString())
+                items(currentViewState) {
+                    Text("NetID: ${it.netid}")
                 }
             }
         }

@@ -50,7 +50,6 @@ interface Api {
     // Do we need to store the current user.
     @POST("logout")
     suspend fun logoutUser(
-        @Body netid: String
     ): Response<messageResponse>
 
     @POST("send-email")
@@ -62,7 +61,7 @@ interface Api {
     suspend fun searchResults(
     ): Response<matchesFound>
 
-    @GET("search")
+    @GET("preferences")
     suspend fun getPreferences(
     ): Response<GPreferences>
 

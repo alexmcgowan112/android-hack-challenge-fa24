@@ -1,16 +1,19 @@
 package com.example.a6starter.ui.screens.main.viewmodels
 
 import android.content.SharedPreferences
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.a6starter.data.entities.DogBreed
 import com.example.a6starter.data.model.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class LoginScreenViewState(
@@ -60,6 +63,10 @@ class LoginScreenViewModel @Inject constructor(
             editor.apply()
 
             // TODO
+            viewModelScope.launch {
+                repository.login(netid, password)
+            }
+
         }
     }
 
@@ -85,6 +92,9 @@ class LoginScreenViewModel @Inject constructor(
             editor.apply()
 
             // TODO
+            viewModelScope.launch {
+                repository.signup(name, netid, password, confirmPassword)
+            }
         }
     }
 }

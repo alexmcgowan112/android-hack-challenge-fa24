@@ -1,7 +1,7 @@
 package com.example.a6starter.data.entities
 
 data class matchesFound(
-    val matches: List<String>
+    val matches: List<matchInfo>
 )
 
 data class matchInfo(

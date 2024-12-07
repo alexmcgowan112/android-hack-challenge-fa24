@@ -2,10 +2,12 @@ package com.example.a6starter.ui.screens.main.viewmodels
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.a6starter.data.model.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +21,10 @@ class AccountScreenViewModel @Inject constructor(
         val editor = sharedPreferences.edit()
         editor.putBoolean("LOGGED_IN", false)
         editor.apply()
+
+        viewModelScope.launch {
+            repository.logout()
+        }
     }
 
     // TODO - Get netid from backend
