@@ -5,6 +5,7 @@ import com.example.a6starter.data.entities.SPreferences
 import com.example.a6starter.data.entities.UpdatePreferencesResponse
 import com.example.a6starter.data.entities.loginUser
 import com.example.a6starter.data.entities.matchesFound
+import com.example.a6starter.data.entities.messageResponse
 import com.example.a6starter.data.entities.newUser
 import com.example.a6starter.data.remote.Api
 import okhttp3.MultipartBody
@@ -28,7 +29,9 @@ class Repository @Inject constructor(
             false
         }
     }
-
+    suspend fun sendEmail(netid: String): Response<messageResponse>{
+        return api.sendEmail(netid)
+    }
     suspend fun updatePreferences(preferences: SPreferences): Response<UpdatePreferencesResponse> {
         return api.updatePreferences(preferences)
     }

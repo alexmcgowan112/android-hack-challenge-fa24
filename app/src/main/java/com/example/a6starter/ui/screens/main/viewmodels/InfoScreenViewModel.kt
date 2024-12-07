@@ -20,7 +20,20 @@ class InfoScreenViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
     private val matchesFlow = MutableStateFlow(emptyList<matchInfo>())
+    private val _emailSendState = MutableStateFlow<EmailSendState>(EmailSendState.Idle)
+    val emailSendState = _emailSendState.asStateFlow()
     val matchesViewState = matchesFlow.asStateFlow()
+
+    sealed class EmailSendState {
+        object Idle : EmailSendState()
+        object Loading : EmailSendState()
+        data class Success(val message: String) : EmailSendState()
+        data class Error(val errorMessage: String) : EmailSendState()
+    }
+
+    init {
+        refreshData()
+    }
 
     /**
      * The current view state of the main screen.
@@ -41,6 +54,34 @@ class InfoScreenViewModel @Inject constructor(
         }
     }
 
+    fun sendEmail(netid: String) {
+        viewModelScope.launch {
+
+            _emailSendState.value = EmailSendState.Loading
+
+            try {
+                val response = repository.sendEmail(netid)
+
+                if (response.isSuccessful) {
+
+                    _emailSendState.value = EmailSendState.Success(
+                        response.body()?.message ?: "Email sent successfully"
+                    )
+                } else {
+
+                    _emailSendState.value = EmailSendState.Error(
+                        response.errorBody()?.string() ?: "Failed to send email"
+                    )
+                }
+            } catch (e: Exception) {
+
+                _emailSendState.value = EmailSendState.Error(
+                    e.localizedMessage ?: "An unexpected error occurred"
+                )
+            }
+        }
+
+    }
     /*
     private fun updatePreferences(preferences: UserPreferences) {
         viewModelScope.launch {
