@@ -50,23 +50,18 @@ class LoginScreenViewModel @Inject constructor(
 
     }
 
-    fun login(sharedPreferences: SharedPreferences, netid: String, password: String) {
+    fun login(navigateToMainScreens: () -> Unit, netid: String, password: String) {
         if (listOf(netid, password).any { it.isEmpty() }) {
             errorMessageFlow.value = "One or more fields are empty!"
         } else {
             errorMessageFlow.value = null
 
-            // Tell MainActivity to change screens
-            val editor = sharedPreferences.edit()
-            editor.putBoolean("LOGGED_IN", true)
-            editor.apply()
-
-            // TODO
             viewModelScope.launch {
                 val response = repository.login(netid, password)
                 Log.d("Login Response", response.errorBody()?.string() ?: "Success")
             }
 
+            navigateToMainScreens()
         }
     }
 
@@ -78,7 +73,7 @@ class LoginScreenViewModel @Inject constructor(
         hasAccountFlow.value = true
     }
 
-    fun signup(sharedPreferences: SharedPreferences, name: String, netid: String, password: String, confirmPassword:String) {
+    fun signup(navigateToMainScreens: () -> Unit, name: String, netid: String, password: String, confirmPassword:String) {
         if (listOf(netid, name, password, confirmPassword).any { it.isEmpty() }) {
             errorMessageFlow.value = "One or more fields are empty!"
         } else if (password != confirmPassword) {
@@ -95,8 +90,9 @@ class LoginScreenViewModel @Inject constructor(
                 } else {
                     Log.d("Signup Error Message", response.errorBody()?.string() ?: "Null")
                 }
-//                repository.hasAccount()
-//                repository.login(sharedPreferences, netid, password)
+
+                hasAccount()
+                login(navigateToMainScreens, netid, password)
             }
         }
     }

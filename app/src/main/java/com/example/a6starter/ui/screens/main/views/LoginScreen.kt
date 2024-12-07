@@ -21,21 +21,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.a6starter.ui.screens.main.viewmodels.LoginScreenViewModel
-import com.example.a6starter.ui.theme.Theme
 
 @Composable
 fun LoginScreen(
-    loginScreenViewModel: LoginScreenViewModel = hiltViewModel(),
-    sharedPreferences: SharedPreferences = LocalContext.current.getSharedPreferences(
-        "LOGGED_IN",
-        Context.MODE_PRIVATE
-    )
+    navigateToMainScreens: () -> Unit,
+    loginScreenViewModel: LoginScreenViewModel = hiltViewModel()
 ) {
     val currentViewState = loginScreenViewModel.loginScreenViewState.collectAsState().value
 
@@ -55,9 +49,9 @@ fun LoginScreen(
         Column (horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(20.dp)) {
             if(currentViewState.hasAccount) {
-                Login(loginScreenViewModel, sharedPreferences)
+                Login(navigateToMainScreens)
             } else {
-                Signup(loginScreenViewModel, sharedPreferences)
+                Signup(navigateToMainScreens)
             }
         }
     }
@@ -83,7 +77,7 @@ fun ErrorMessage(messageText: String?) {
 }
 
 @Composable
-fun Login(loginScreenViewModel: LoginScreenViewModel, sharedPreferences: SharedPreferences) {
+fun Login(navigateToMainScreens: () -> Unit, loginScreenViewModel: LoginScreenViewModel = hiltViewModel()) {
     var netid by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -95,7 +89,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, sharedPreferences: SharedP
 
     ErrorMessage(loginScreenViewModel.loginScreenViewState.collectAsState().value.errorMessage)
 
-    Button(onClick = { loginScreenViewModel.login(sharedPreferences, netid, password) }) {
+    Button(onClick = { loginScreenViewModel.login(navigateToMainScreens, netid, password) }) {
         Text("Login")
     }
     Button(onClick = {loginScreenViewModel.noAccount()}) {
@@ -104,7 +98,7 @@ fun Login(loginScreenViewModel: LoginScreenViewModel, sharedPreferences: SharedP
 }
 
 @Composable
-fun Signup(loginScreenViewModel: LoginScreenViewModel, sharedPreferences: SharedPreferences) {
+fun Signup(navigateToMainScreens: () -> Unit, loginScreenViewModel: LoginScreenViewModel = hiltViewModel()) {
     var name by remember { mutableStateOf("") }
     var netid by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -122,19 +116,11 @@ fun Signup(loginScreenViewModel: LoginScreenViewModel, sharedPreferences: Shared
 
     ErrorMessage(loginScreenViewModel.loginScreenViewState.collectAsState().value.errorMessage)
 
-    Button(onClick = {loginScreenViewModel.signup(sharedPreferences, name, netid, password, confirmPassword)}) {
+    Button(onClick = {loginScreenViewModel.signup(navigateToMainScreens, name, netid, password, confirmPassword)}) {
         Text("Sign Up")
     }
 
     Button(onClick = {loginScreenViewModel.hasAccount()}) {
         Text("Already Have An Account?")
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    Theme {
-        LoginScreen()
     }
 }

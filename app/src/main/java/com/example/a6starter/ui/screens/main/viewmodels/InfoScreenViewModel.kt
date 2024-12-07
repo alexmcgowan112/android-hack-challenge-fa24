@@ -6,14 +6,14 @@ import com.example.a6starter.data.entities.matchInfo
 import com.example.a6starter.data.model.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-data class InfoScreenViewState(
-    val matches: List<matchInfo> = mutableListOf()
-)
 
 @HiltViewModel
 class InfoScreenViewModel @Inject constructor(

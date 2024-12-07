@@ -70,6 +70,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
+
+    // For Cookie handling in OkHttp
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.0")
 }
 
 // Allow references to generated code

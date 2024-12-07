@@ -1,7 +1,5 @@
 package com.example.a6starter
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,7 +12,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -76,29 +73,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Theme {
-                val sharedPreferences =
-                    getSharedPreferences("LOGGED_IN", Context.MODE_PRIVATE)
-
-                var loggedIn by remember {
-                    mutableStateOf(sharedPreferences.getBoolean("LOGGED_IN", false))
-                }
-
-                DisposableEffect(sharedPreferences) {
-                    val listener =  { prefs: SharedPreferences, key: String? ->
-                        if (key == "LOGGED_IN") {
-                            loggedIn = prefs.getBoolean("LOGGED_IN", false)
-                        }
-                    }
-                    sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
-                    onDispose {
-                        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
-                    }
-                }
+                var loggedIn by remember { mutableStateOf(false) }
 
                 if(loggedIn) {
-                    NavigableScreens()
+                    NavigableScreens({loggedIn = !loggedIn})
                 } else {
-                    LoginScreen()
+                    LoginScreen({loggedIn = !loggedIn})
                 }
             }
         }
@@ -106,7 +86,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NavigableScreens() {
+fun NavigableScreens(navigateToLoginScreen: () -> Unit) {
     val navController = rememberNavController()
     val tabs = listOf(
         NavItem(
@@ -170,7 +150,7 @@ fun NavigableScreens() {
                 PreferencesScreen()
             }
             composable(Screen.AccountScreen::class.simpleName!!) {
-                AccountScreen()
+                AccountScreen(navigateToLoginScreen)
             }
         }
 

@@ -23,15 +23,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.a6starter.ui.screens.main.viewmodels.AccountScreenViewModel
 
 @Composable
-fun AccountScreen(
-    accountScreenViewModel: AccountScreenViewModel = hiltViewModel(),
-    sharedPreferences: SharedPreferences = LocalContext.current.getSharedPreferences(
-        "LOGGED_IN",
-        Context.MODE_PRIVATE
-    )
+fun AccountScreen(navigateToLoginScreen: () -> Unit,
+    accountScreenViewModel: AccountScreenViewModel = hiltViewModel()
 ) {
-    val currentViewState = accountScreenViewModel.netidViewState.collectAsState().value
-
     val brush = Brush.verticalGradient(
         listOf(
             Color(96, 150, 253),
@@ -50,7 +44,7 @@ fun AccountScreen(
 
             Column (horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("Hello!", fontSize = 30.sp)
-                Button(onClick = { accountScreenViewModel.logout(sharedPreferences) }) {
+                Button(onClick = { accountScreenViewModel.logout(navigateToLoginScreen) }) {
                     Text("Log Out")
                 }
             }
