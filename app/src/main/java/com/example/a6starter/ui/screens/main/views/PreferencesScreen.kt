@@ -1,5 +1,6 @@
 package com.example.a6starter.ui.screens.main.views
 
+import android.graphics.fonts.FontStyle
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,8 +18,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.a6starter.ui.screens.main.viewmodels.PreferencesScreenViewModel
 import com.example.a6starter.ui.theme.Theme
+import java.time.format.TextStyle
 
 @Composable
 fun PreferencesScreen(viewModel: PreferencesScreenViewModel = hiltViewModel()) {
@@ -35,7 +39,7 @@ fun PreferencesScreen(viewModel: PreferencesScreenViewModel = hiltViewModel()) {
     LaunchedEffect(error) {
         error?.let { errorMessage ->
             Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
-            // Optionally clear the error after showing
+
             viewModel.clearError()
         }
     }
@@ -46,12 +50,12 @@ fun PreferencesScreen(viewModel: PreferencesScreenViewModel = hiltViewModel()) {
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Set Your Preferences", fontSize = 30.sp, color = Color.White)
+            Text(text = "Set Your Preferences", fontSize = 30.sp, color = Color.White, style = androidx.compose.ui.text.TextStyle(shadow = Shadow(color = Color.Black, offset = Offset(5f, 10f), blurRadius = 19f)))
 
             Spacer(modifier = Modifier.height(30.dp))
             Text(text = "Study Session Objective:", color = Color.White)
 
-            // ?: will return false if the variable before it is null (i think)
+
 
             CheckBox("Study", preferences.objective_study ?: false) {
                 viewModel.updatePreference("objective_study", it)
@@ -61,6 +65,7 @@ fun PreferencesScreen(viewModel: PreferencesScreenViewModel = hiltViewModel()) {
             }
 
             Spacer(modifier = Modifier.height(20.dp))
+
             Text(text = "Preferred Time(s):", color = Color.White)
             CheckBox("Morning", preferences.time_morning ?: false) {
                 viewModel.updatePreference("time_morning", it)

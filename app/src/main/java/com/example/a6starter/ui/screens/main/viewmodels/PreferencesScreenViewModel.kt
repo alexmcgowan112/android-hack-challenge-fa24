@@ -59,24 +59,24 @@ class PreferencesScreenViewModel @Inject constructor(
                     }
 
                     response.code() == 401 -> {
-                        // Handle not authenticated error
+
                         val errorBody = response.errorBody()?.string()
-                        // You might want to set an error state or show a toast
+
                         _errorFlow.value = "Not logged in"
                     }
 
                     response.code() == 404 -> {
-                        // Handle user not found error
+
                         _errorFlow.value = "User not found"
                     }
 
                     else -> {
-                        // Handle other error codes
+
                         _errorFlow.value = "Failed to fetch preferences: ${response.code()}"
                     }
                 }
             } catch (e: Exception) {
-                // Handle network or other exceptions
+
                 _errorFlow.value = "Error: ${e.message ?: "Unknown error occurred"}"
             }
         }
