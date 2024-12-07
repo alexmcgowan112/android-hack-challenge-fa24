@@ -16,6 +16,18 @@ data class SPreferences(
 
 // TODO: Move the ones related to different MVVM to different files.
 
+data class UpdatePreferencesResponse(
+    val message: String,
+    val preferences: PreferencesDetails
+)
+
+data class PreferencesDetails(
+    val locations: Map<String, Boolean>,
+    val times: Map<String, Boolean>,
+    val objectives: Map<String, Boolean>
+)
+
+
 data class SAccountCreate(
     val name: String,
     val netId: String,

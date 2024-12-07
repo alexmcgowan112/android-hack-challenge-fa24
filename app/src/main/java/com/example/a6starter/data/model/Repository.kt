@@ -1,6 +1,8 @@
 package com.example.a6starter.data.model
 
+import com.example.a6starter.data.entities.GPreferences
 import com.example.a6starter.data.entities.SPreferences
+import com.example.a6starter.data.entities.UpdatePreferencesResponse
 import com.example.a6starter.data.remote.Api
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -11,8 +13,8 @@ import javax.inject.Singleton
 class Repository @Inject constructor(
     private val api: Api,
 ) {
-    suspend fun getPreferences(netId: String): Response<SPreferences> {
-        return api.getStudentPreferences(netId);
+    suspend fun getPreferences(): Response<GPreferences> {
+        return api.getStudentPreferences();
     }
 
     suspend fun uploadSchedule(file: MultipartBody.Part): Boolean {
@@ -24,8 +26,8 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun updatePreferences(preferences: SPreferences): Response<Map<String, Any>> {
-        return api.updatePreferences(preferences);
+    suspend fun updatePreferences(preferences: SPreferences): Response<UpdatePreferencesResponse> {
+        return api.updatePreferences(preferences)
     }
 }
 //TODO ADD MORE API INTERACTIONS AS NEEDED

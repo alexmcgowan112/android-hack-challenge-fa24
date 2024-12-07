@@ -2,6 +2,7 @@ package com.example.a6starter.ui.screens.main.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.a6starter.data.entities.GPreferences
 import com.example.a6starter.data.entities.SPreferences
 import com.example.a6starter.data.model.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,12 @@ import javax.inject.Inject
 class PreferencesScreenViewModel @Inject constructor(
     private val repository: Repository,
 ) : ViewModel() {
+    private val _errorFlow = MutableStateFlow<String?>(null)
+    val errorFlow = _errorFlow.asStateFlow()
+
+    init {
+        fetchPreferences()
+    }
 
     private val preferencesFlow = MutableStateFlow(
         SPreferences(
@@ -31,31 +38,52 @@ class PreferencesScreenViewModel @Inject constructor(
     )
     val preferences = preferencesFlow.asStateFlow()
 
-    fun fetchPreferences(netId: String) {
+    fun fetchPreferences() {
         viewModelScope.launch {
             try {
-                val response = repository.getPreferences(netId)
-                if (response.isSuccessful) {
-                    val fetchedPreferences = response.body()
-                    preferencesFlow.value = fetchedPreferences ?: SPreferences(
-                        location_north = false,
-                        location_south = false,
-                        location_central = false,
-                        location_west = false,
-                        time_morning = false,
-                        time_afternoon = false,
-                        time_evening = false,
-                        objective_study = false,
-                        objective_homework = false
-                    )
-                } else {
-                    println("Error fetching preferences")
+                val response = repository.getPreferences()
+                when {
+                    response.isSuccessful -> {
+                        val fetchedPreferences = response.body() ?: GPreferences(
+                            north = false,
+                            south = false,
+                            central = false,
+                            west = false,
+                            morning = false,
+                            afternoon = false,
+                            evening = false,
+                            study = false,
+                            homework = false
+                        )
+                        preferencesFlow.value = fetchedPreferences as SPreferences
+                    }
+
+                    response.code() == 401 -> {
+                        // Handle not authenticated error
+                        val errorBody = response.errorBody()?.string()
+                        // You might want to set an error state or show a toast
+                        _errorFlow.value = "Not logged in"
+                    }
+
+                    response.code() == 404 -> {
+                        // Handle user not found error
+                        _errorFlow.value = "User not found"
+                    }
+
+                    else -> {
+                        // Handle other error codes
+                        _errorFlow.value = "Failed to fetch preferences: ${response.code()}"
+                    }
                 }
             } catch (e: Exception) {
-
-                println("Error fetching preferences")
+                // Handle network or other exceptions
+                _errorFlow.value = "Error: ${e.message ?: "Unknown error occurred"}"
             }
         }
+    }
+
+    fun clearError() {
+        _errorFlow.value = null
     }
 
     fun updatePreference(field: String, value: Boolean) {
@@ -75,15 +103,31 @@ class PreferencesScreenViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val response = repository.updatePreferences(preferencesFlow.value)
-                if (response.isSuccessful) {
-                    println("Preferences updated successfully")
-                } else {
+                when {
+                    response.isSuccessful -> {
+                        val updateResult = response.body()
+                        println("Preferences updated: ${updateResult?.message}")
+                    }
 
-                    println("Error updating preferences: ${response.code()}")
+                    response.code() == 401 -> {
+                        _errorFlow.value = "Not logged in"
+                    }
+
+                    response.code() == 404 -> {
+                        _errorFlow.value = "User not found"
+                    }
+
+                    response.code() == 400 -> {
+                        val errorBody = response.errorBody()?.string()
+                        _errorFlow.value = "Invalid preference: $errorBody"
+                    }
+
+                    else -> {
+                        _errorFlow.value = "Failed to update preferences: ${response.code()}"
+                    }
                 }
             } catch (e: Exception) {
-
-                println("Error updating preferences: ${e.message}")
+                _errorFlow.value = "Error updating preferences: ${e.message}"
             }
         }
 

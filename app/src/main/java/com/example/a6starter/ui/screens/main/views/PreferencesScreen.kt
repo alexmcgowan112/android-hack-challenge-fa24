@@ -12,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,7 +30,15 @@ import com.example.a6starter.ui.theme.Theme
 @Composable
 fun PreferencesScreen(viewModel: PreferencesScreenViewModel = viewModel()) {
     val preferences by viewModel.preferences.collectAsState()
-
+    val error by viewModel.errorFlow.collectAsState()
+    val context = LocalContext.current
+    LaunchedEffect(error) {
+        error?.let { errorMessage ->
+            Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+            // Optionally clear the error after showing
+            viewModel.clearError()
+        }
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
