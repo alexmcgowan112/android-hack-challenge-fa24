@@ -1,5 +1,6 @@
 package com.example.a6starter.data.entities
 
+// Get student preferences (GET request for student preferences)
 data class GPreferences(
     val north: Boolean,
     val south: Boolean,
