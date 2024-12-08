@@ -76,8 +76,8 @@ fun InfoScreen(infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
                     items(currentViewState) { match ->
                         MatchCard(
                             match = match,
-                            onContactBuddy = {
-                                infoScreenViewModel.sendEmail(match.netid)
+                            onContactBuddy = {  netid ->
+                                infoScreenViewModel.sendEmail(netid)
                             }
                         )
                     }
@@ -190,7 +190,7 @@ fun MatchCard(match: matchInfo, onContactBuddy: (String) -> Unit) {
 @Composable
 fun ContactBuddy(
     netid: String,
-                 onContactBuddy: (String) -> Unit) {
+    onContactBuddy: (String) -> Unit) {
     Button(onClick = { onContactBuddy(netid) }) {
         Text("Contact Buddy!")
     }
