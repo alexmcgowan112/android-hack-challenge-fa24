@@ -1,3 +1,2 @@
 # Team 17 Hack Challenge Frontend
-TODO
-- Minor bugfixes
+An app to help Cornell students find people to study with.
