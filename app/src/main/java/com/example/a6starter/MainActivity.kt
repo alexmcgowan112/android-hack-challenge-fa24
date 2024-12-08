@@ -90,7 +90,7 @@ fun NavigableScreens(navigateToLoginScreen: () -> Unit) {
     val navController = rememberNavController()
     val tabs = listOf(
         NavItem(
-            label = "Info",
+            label = "Matches",
             icon = painterResource(id = R.drawable.baseline_supervisor_account_24),
             screen = Screen.InfoScreen
         ),
@@ -137,11 +137,11 @@ fun NavigableScreens(navigateToLoginScreen: () -> Unit) {
     }) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.UploadScreen::class.simpleName!!,
+            startDestination = Screen.InfoScreen::class.simpleName!!,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.InfoScreen::class.simpleName!!) {
-                InfoScreen()
+                InfoScreen(navController)
             }
             composable(Screen.UploadScreen::class.simpleName!!) {
                 UploadScreen()

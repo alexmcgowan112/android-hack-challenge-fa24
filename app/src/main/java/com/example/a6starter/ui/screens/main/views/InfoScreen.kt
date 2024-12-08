@@ -15,6 +15,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,15 +29,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.a6starter.data.entities.matchInfo
 import com.example.a6starter.ui.screens.main.viewmodels.InfoScreenViewModel
 import com.example.a6starter.ui.theme.Theme
 import java.util.Locale
 
 @Composable
-fun InfoScreen(infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
+fun InfoScreen(navController: NavController, infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
     val currentViewState = infoScreenViewModel.matchesViewState.collectAsState().value
     val emailSendState by infoScreenViewModel.emailSendState.collectAsState()
+
+    LaunchedEffect(navController) {
+        infoScreenViewModel.refreshData()
+    }
+
     val brush = Brush.verticalGradient(
         listOf(
             Color(96, 150, 253),
@@ -133,7 +141,7 @@ fun MatchCard(match: matchInfo, onContactBuddy: (String) -> Unit) {
 
             // Match Score
             Text(
-                text = "Match Score: ${String.format(Locale.US, "%.2f", match.match_score * 100)}%",
+                text = "Match Score: ${String.format(Locale.US, "%.2f", match.match_score)}%",
                 color = Color.White.copy(alpha = 0.9f),
                 fontSize = 16.sp,
                 modifier = Modifier.padding(top = 8.dp)
@@ -193,12 +201,5 @@ fun ContactBuddy(
     onContactBuddy: (String) -> Unit) {
     Button(onClick = { onContactBuddy(netid) }) {
         Text("Contact Buddy!")
-    }
-}
-@Preview(showBackground = true)
-@Composable
-fun InfoPreview() {
-    Theme {
-        InfoScreen()
     }
 }
