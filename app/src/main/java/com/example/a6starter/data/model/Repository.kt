@@ -1,6 +1,7 @@
 package com.example.a6starter.data.model
 
 import android.util.Log
+import com.example.a6starter.data.entities.EmailRequest
 import com.example.a6starter.data.entities.GPreferences
 import com.example.a6starter.data.entities.SPreferences
 import com.example.a6starter.data.entities.UpdatePreferencesResponse
@@ -40,7 +41,7 @@ class Repository @Inject constructor(
         }
     }
     suspend fun sendEmail(netid: String): Response<messageResponse>{
-        return api.sendEmail(netid)
+        return api.sendEmail(EmailRequest(netid))
     }
     suspend fun updatePreferences(preferences: SPreferences): Response<UpdatePreferencesResponse> {
         return api.updatePreferences(preferences)

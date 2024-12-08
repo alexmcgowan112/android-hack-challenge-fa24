@@ -17,3 +17,7 @@ data class commonPref(
     val times: List<String>,
     val objectives: List<String>
 )
+
+data class EmailRequest(
+    val sender_netid: String
+)

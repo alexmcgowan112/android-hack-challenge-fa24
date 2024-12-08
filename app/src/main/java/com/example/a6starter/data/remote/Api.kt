@@ -1,5 +1,6 @@
 package com.example.a6starter.data.remote
 
+import com.example.a6starter.data.entities.EmailRequest
 import com.example.a6starter.data.entities.GPreferences
 import com.example.a6starter.data.entities.SPreferences
 import com.example.a6starter.data.entities.UpdatePreferencesResponse
@@ -55,7 +56,7 @@ interface Api {
 
     @POST("send-email")
     suspend fun sendEmail(
-        @Body sender_netid: String
+        @Body emailRequest: EmailRequest
     ): Response<messageResponse>
 
     @GET("search")
