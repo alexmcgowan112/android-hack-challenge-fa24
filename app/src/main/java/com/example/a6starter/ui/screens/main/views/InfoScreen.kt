@@ -91,17 +91,6 @@ fun InfoScreen(navController: NavController, infoScreenViewModel: InfoScreenView
                     }
                 }
             }
-            LazyColumn(state = lazyListState2,
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(currentViewState) {
-                    Text("NetID: ${it.netid}")
-                }
-            }
-            Button(onClick = { infoScreenViewModel.refreshData() }) {
-                Text("Refresh")
-            }
         }
     }
 }
