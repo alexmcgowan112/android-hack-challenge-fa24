@@ -85,10 +85,12 @@ class LoginScreenViewModel @Inject constructor(
 
     fun noAccount() {
         hasAccountFlow.value = false
+        errorMessageFlow.value = null
     }
 
     fun hasAccount() {
         hasAccountFlow.value = true
+        errorMessageFlow.value = null
     }
 
     fun signup(navigateToMainScreens: () -> Unit, name: String, netid: String, password: String, confirmPassword:String) {
@@ -97,20 +99,17 @@ class LoginScreenViewModel @Inject constructor(
         } else if (password != confirmPassword) {
             errorMessageFlow.value = "Passwords do not match!"
         } else {
-            errorMessageFlow.value = null
-            hasAccountFlow.value = true
 
-            // TODO
             viewModelScope.launch {
                 val response = repository.signup(name, netid, password, confirmPassword)
                 if(response.isSuccessful) {
                     Log.d("Signup Success Code", response.code().toString())
+                    hasAccount()
+                    login(navigateToMainScreens, netid, password)
                 } else {
                     Log.d("Signup Error Message", response.errorBody()?.string() ?: "Null")
+                    errorMessageFlow.value = response.errorBody()?.string() ?: "Null"
                 }
-
-                hasAccount()
-                login(navigateToMainScreens, netid, password)
             }
         }
     }

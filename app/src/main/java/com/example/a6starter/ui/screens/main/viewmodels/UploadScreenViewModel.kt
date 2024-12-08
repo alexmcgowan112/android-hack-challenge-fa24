@@ -2,6 +2,7 @@ package com.example.a6starter.ui.screens.main.viewmodels
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.a6starter.data.model.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -77,9 +78,13 @@ class UploadScreenViewModel @Inject constructor(
                     } else {
                         _uploadState.value = UploadState.Failure
                     }
+                } else {
+                    Log.e("UploadViewModel", "Failed to open input stream for URI: $uri")
+                    _uploadState.value = UploadState.Error
                 }
             } catch (e: Exception) {
                 _uploadState.value = UploadState.Error
+                Log.e("Upload Error", e.message.toString())
             }
         }
     }

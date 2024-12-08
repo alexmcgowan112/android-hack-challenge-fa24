@@ -1,5 +1,6 @@
 package com.example.a6starter.data.model
 
+import android.util.Log
 import com.example.a6starter.data.entities.GPreferences
 import com.example.a6starter.data.entities.SPreferences
 import com.example.a6starter.data.entities.UpdatePreferencesResponse
@@ -25,8 +26,16 @@ class Repository @Inject constructor(
     suspend fun uploadSchedule(file: MultipartBody.Part): Boolean {
         return try {
             val response = api.uploadSchedule(file)
+
+            if(!response.isSuccessful) {
+                Log.e("Error response", response.errorBody()?.string() ?: "null")
+            } else {
+                Log.d("Response", response.body().toString())
+            }
+
             response.isSuccessful
         } catch (e: Exception) {
+            e.message?.let { Log.e("Upload error", it) }
             false
         }
     }
@@ -53,4 +62,3 @@ class Repository @Inject constructor(
         return api.logoutUser()
     }
 }
-//TODO ADD MORE API INTERACTIONS AS NEEDED

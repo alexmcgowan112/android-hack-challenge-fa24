@@ -20,11 +20,11 @@ import retrofit2.http.Path
 
 interface Api {
     // Upload schedule (POST request for .ics file)
-    @POST("user/upload")
+    @POST("upload")
     @Multipart
     suspend fun uploadSchedule(
         @Part file: MultipartBody.Part
-    ): Response<Unit>
+    ): Response<messageResponse>
 
     // Update user preferences
     @POST("user/preferences")

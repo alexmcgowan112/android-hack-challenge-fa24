@@ -39,7 +39,6 @@ class InfoScreenViewModel @Inject constructor(
      * reflects the updated information.
      */
 
-    // TODO - Methods
     // Methods we might need.
     private fun refreshData(){
         viewModelScope.launch {

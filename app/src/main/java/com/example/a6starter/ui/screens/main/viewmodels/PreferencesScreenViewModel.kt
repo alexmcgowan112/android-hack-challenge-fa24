@@ -135,15 +135,4 @@ class PreferencesScreenViewModel @Inject constructor(
         }
 
     }
-
-    // TODO - Functions
-    /**
-    fun updatePreference(
-    preferenceName: String, newState: Boolean
-    ) {
-    preferencesFlow.value = preferencesFlow.value.toMutableMap().apply {
-    put(preferenceName, newState)
-    }
-    // TODO - Update backend
-    }**/
 }

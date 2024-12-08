@@ -1,6 +1,7 @@
 package com.example.a6starter.ui.screens.main.views
 
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -57,20 +58,16 @@ fun UploadScreen(viewModel: UploadScreenViewModel = hiltViewModel()) {
         ) {
             FileSelector(
                 onFileSelected = { uri ->
-                    viewModel.uploadFile(uri, context)
+                    if (uri == null) {
+                        Log.e("UploadScreen", "File selection failed or canceled.")
+                    } else {
+                        Log.d("UploadScreen", "Selected file URI: $uri")
+                        viewModel.uploadFile(uri, context)
+                    }
                 }
             )
             Hyperlink()
         }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun UploadPreview() {
-    Theme {
-        UploadScreen()
     }
 }
 

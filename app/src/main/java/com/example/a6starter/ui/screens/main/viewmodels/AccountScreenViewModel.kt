@@ -18,6 +18,4 @@ class AccountScreenViewModel @Inject constructor(
         }
         navigateToLoginScreen()
     }
-
-    // TODO - Get netid from backend
 }
