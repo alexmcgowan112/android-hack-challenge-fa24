@@ -1,6 +1,7 @@
 package com.example.a6starter.ui.screens.main.views
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,6 +43,7 @@ fun InfoScreen(infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
         )
     )
     val lazyListState = rememberLazyListState()
+    val lazyListState2 = rememberLazyListState()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -67,104 +69,115 @@ fun InfoScreen(infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
             } else {
                 LazyColumn(
                     state = lazyListState,
-                    modifier = Modifier.padding(top = 16.dp)
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(currentViewState) { match ->
                         MatchCard(
                             match = match,
-                            onContactBuddy = { netid ->
-                                infoScreenViewModel.sendEmail(netid)
+                            onContactBuddy = {
+                                infoScreenViewModel.sendEmail(match.netid)
                             }
                         )
                     }
                 }
             }
-            LazyColumn(state = lazyListState) {
+            LazyColumn(state = lazyListState2,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 items(currentViewState) {
                     Text("NetID: ${it.netid}")
                 }
+            }
+            Button(onClick = { infoScreenViewModel.refreshData() }) {
+                Text("Refresh")
             }
         }
     }
 }
 
 @Composable
-
 fun MatchCard(match: matchInfo, onContactBuddy: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(red = 140, green = 21, blue = 209, alpha = 188)
+            containerColor = Color(0xFF6D44BF)
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp) // Rounded corners
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFF6D44BF),
+                            Color(0xFF9E6DDE)
+                        )
+                    )
+                )
                 .padding(16.dp)
         ) {
-
+            // Name and NetID
             Text(
                 text = "${match.name} (${match.netid})",
                 color = Color.White,
-                fontSize = 20.sp,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
             )
 
-
+            // Match Score
             Text(
                 text = "Match Score: ${String.format(Locale.US, "%.2f", match.match_score * 100)}%",
-                color = Color.White,
+                color = Color.White.copy(alpha = 0.9f),
+                fontSize = 16.sp,
                 modifier = Modifier.padding(top = 8.dp)
             )
 
-
+            // Common Courses
             Text(
                 text = "Common Courses:",
                 color = Color.White,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 12.dp)
             )
             match.common_courses.forEach { course ->
                 Text(
                     text = "• $course",
-                    color = Color.White,
-                    modifier = Modifier.padding(start = 8.dp)
+                    color = Color.White.copy(alpha = 0.8f),
+                    modifier = Modifier.padding(start = 12.dp)
                 )
             }
 
-
+            // Common Preferences
             Text(
                 text = "Common Preferences:",
                 color = Color.White,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = 12.dp)
             )
-
-
             Text(
                 text = "Locations: ${match.common_preferences.locations.joinToString(", ")}",
-                color = Color.White,
-                modifier = Modifier.padding(start = 8.dp)
+                color = Color.White.copy(alpha = 0.8f),
+                modifier = Modifier.padding(start = 12.dp, top = 4.dp)
             )
-
-
             Text(
                 text = "Times: ${match.common_preferences.times.joinToString(", ")}",
-                color = Color.White,
-                modifier = Modifier.padding(start = 8.dp)
+                color = Color.White.copy(alpha = 0.8f),
+                modifier = Modifier.padding(start = 12.dp, top = 4.dp)
             )
-
-
             Text(
                 text = "Objectives: ${match.common_preferences.objectives.joinToString(", ")}",
-                color = Color.White,
-                modifier = Modifier.padding(start = 8.dp)
+                color = Color.White.copy(alpha = 0.8f),
+                modifier = Modifier.padding(start = 12.dp, top = 4.dp)
             )
 
-
+            // Contact Buddy Button
             ContactBuddy(
                 netid = match.netid,
                 onContactBuddy = onContactBuddy
@@ -172,6 +185,7 @@ fun MatchCard(match: matchInfo, onContactBuddy: (String) -> Unit) {
         }
     }
 }
+
 
 @Composable
 fun ContactBuddy(

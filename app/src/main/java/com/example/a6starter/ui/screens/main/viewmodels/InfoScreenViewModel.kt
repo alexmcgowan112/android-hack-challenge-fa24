@@ -40,7 +40,7 @@ class InfoScreenViewModel @Inject constructor(
      */
 
     // Methods we might need.
-    private fun refreshData(){
+    fun refreshData(){
         viewModelScope.launch {
             val updatedResults = repository.getSearchResults()
             matchesFlow.update { updatedResults.body()?.matches ?: emptyList<matchInfo>()}
