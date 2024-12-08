@@ -104,7 +104,7 @@ fun Signup(navigateToMainScreens: () -> Unit, loginScreenViewModel: LoginScreenV
 
     Text("Sign Up", fontSize = 30.sp)
 
-    TextFieldWithLabel("Name:", name, { name = sanitizeString(it) }, "Type Name Here")
+    TextFieldWithLabel("Name:", name, { name = it }, "Type Name Here")
 
     TextFieldWithLabel("NetID:", netid, { netid = sanitizeString(it) }, "Type NetID Here")
 
