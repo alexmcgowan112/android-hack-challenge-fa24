@@ -20,6 +20,11 @@ class InfoScreenViewModel @Inject constructor(
     val emailSendState = _emailSendState.asStateFlow()
     val matchesViewState = matchesFlow.asStateFlow()
 
+    //Refresh Swipe
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing = _isRefreshing.asStateFlow()
+
+
     sealed class EmailSendState {
         object Idle : EmailSendState()
         object Loading : EmailSendState()
@@ -40,10 +45,16 @@ class InfoScreenViewModel @Inject constructor(
      */
 
     // Methods we might need.
-    fun refreshData(){
+    fun refreshData() {
         viewModelScope.launch {
-            val updatedResults = repository.getSearchResults()
-            matchesFlow.update { updatedResults.body()?.matches ?: emptyList<matchInfo>()}
+            _isRefreshing.value = true
+            try {
+                val updatedResults = repository.getSearchResults()
+                matchesFlow.update { updatedResults.body()?.matches ?: emptyList() }
+            } catch (e: Exception) {
+            } finally {
+                _isRefreshing.value = false
+            }
         }
     }
 
@@ -72,10 +83,11 @@ class InfoScreenViewModel @Inject constructor(
                     e.localizedMessage ?: "An unexpected error occurred"
                 )
             }
+            kotlinx.coroutines.delay(2000)
+            resetEmailSendState()
         }
-        fun resetEmailSendState() {
-            _emailSendState.value = EmailSendState.Idle
-        }
-
+    }
+    fun resetEmailSendState() {
+        _emailSendState.value = EmailSendState.Idle
     }
 }

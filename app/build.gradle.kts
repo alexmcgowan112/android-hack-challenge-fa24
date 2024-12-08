@@ -70,6 +70,10 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
+    implementation ("androidx.compose.material3:material3:1.2.0")
+    implementation ("androidx.compose.material:material:1.5.0")  // For PullRefresh integration
+
+
 }
 
 // Allow references to generated code

@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -35,14 +38,21 @@ import com.example.a6starter.ui.screens.main.viewmodels.InfoScreenViewModel
 import com.example.a6starter.ui.theme.Theme
 import java.util.Locale
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun InfoScreen(navController: NavController, infoScreenViewModel: InfoScreenViewModel = hiltViewModel()) {
     val currentViewState = infoScreenViewModel.matchesViewState.collectAsState().value
     val emailSendState by infoScreenViewModel.emailSendState.collectAsState()
+    val isRefreshing by infoScreenViewModel.isRefreshing.collectAsState()
 
     LaunchedEffect(navController) {
         infoScreenViewModel.refreshData()
     }
+
+    val refreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = { infoScreenViewModel.refreshData() }
+    )
 
     val brush = Brush.verticalGradient(
         listOf(
@@ -51,12 +61,12 @@ fun InfoScreen(navController: NavController, infoScreenViewModel: InfoScreenView
         )
     )
     val lazyListState = rememberLazyListState()
-    val lazyListState2 = rememberLazyListState()
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(brush)
-            .padding(20.dp),
+            .padding(20.dp)
+            .pullRefresh(refreshState),
         contentAlignment = Alignment.Center
     ) {
         Column(
