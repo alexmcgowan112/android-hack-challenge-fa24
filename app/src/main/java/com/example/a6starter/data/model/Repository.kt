@@ -62,4 +62,8 @@ class Repository @Inject constructor(
     suspend fun logout(): Response<messageResponse> {
         return api.logoutUser()
     }
+    suspend fun getAvailableServices(): Response<List<String>> {
+        // Placeholder
+        return Response.success(emptyList())
+    }
 }
