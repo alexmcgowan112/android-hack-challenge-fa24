@@ -30,6 +30,7 @@ import com.example.a6starter.ui.screens.main.views.AccountScreen
 import com.example.a6starter.ui.screens.main.views.InfoScreen
 import com.example.a6starter.ui.screens.main.views.LoginScreen
 import com.example.a6starter.ui.screens.main.views.PreferencesScreen
+import com.example.a6starter.ui.screens.main.views.SelectServiceScreen
 import com.example.a6starter.ui.screens.main.views.UploadScreen
 import com.example.a6starter.ui.theme.Theme
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,7 +79,8 @@ class MainActivity : ComponentActivity() {
                 if(loggedIn) {
                     NavigableScreens({loggedIn = !loggedIn})
                 } else {
-                    LoginScreen({loggedIn = !loggedIn})
+                    SelectServiceScreen({loggedIn = !loggedIn})
+                    //LoginScreen({loggedIn = !loggedIn})
                 }
             }
         }

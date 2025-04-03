@@ -88,7 +88,43 @@ class SelectServiceViewModel @Inject constructor(
     /**
      * Allows the UI to set the currently selected service.
      */
-    fun selectService(service: String) {
-        selectedServiceFlow.value = service
+    fun handleServiceSelection(
+        selectedService: String,
+        navigateToScreen: (String) -> Unit,
+        showLoginPrompt: () -> Unit,
+        isLoggedIn: Boolean
+    ) {
+        viewModelScope.launch {
+            // Update the selected service flow
+            selectedServiceFlow.value = selectedService
+
+            // Check the requirements based on the selected service
+            when (selectedService) {
+                "Study Buddy" -> {
+                    if (isLoggedIn) {
+                        navigateToScreen("StudyBuddyScreen")
+                    } else {
+                        showLoginPrompt() // Prompt the user to log in
+                    }
+                }
+                "Dining" -> {
+                    // No login required for the Dining service
+                    // Privileges will need to be handled in the backend
+                    // still need to figure out how to do that
+                    navigateToScreen("DiningScreen")
+                }
+                else -> {
+                    errorMessageFlow.value = "Invalid service selected"
+                }
+            }
+        }
+    }
+    /*
+    Shows a login prompt if the user tries to access a service that requires login or presses the
+    login button. Very useful!
+     */
+    //TODO 1: Make this actually show a login prompt
+    fun showLoginPrompt() {
+        errorMessageFlow.value = "Please log in to access this service."
     }
 }

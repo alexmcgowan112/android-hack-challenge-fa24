@@ -19,6 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -32,17 +33,11 @@ import com.example.a6starter.R
 @Composable
 fun SelectServiceScreen(
     navigateToMainScreens: () -> Unit,
-    loginScreenViewModel: SelectServiceViewModel = hiltViewModel()
+    selectScreenViewModel: SelectServiceViewModel = hiltViewModel()
 ){
-    val brush = Brush.verticalGradient(
-        listOf(
-            Color(96, 150, 253),
-            Color(170, 182, 251)
-        )
-    )
+    val currentViewState = selectScreenViewModel.selectServiceViewState.collectAsState().value
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(brush)
         .padding(20.dp),
         contentAlignment = Alignment.Center
     ){
@@ -55,19 +50,48 @@ fun SelectServiceScreen(
             Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
                 InfoButton(onClick = { /* Handle click */ })
             }
-            LoginCard(label = "Login", onClick = navigateToMainScreens)
-            ServiceCard(label = "Study Buddy", description = "Find a study buddy",
-                imageResource = R.drawable.studybuddy, onClick = { /* Handle click */ }
+            LoginCard(
+                label = "Login",
+                onClick = { println("Under Construction") } // Will change this later to
+            // actually navigate to the login screen or do a cool-up animation!
             )
 
-            ServiceCard(label = "Study Buddy", description = "Find a study buddy",
-                imageResource = R.drawable.studybuddy, onClick = { /* Handle click */ }
+            ServiceCard(
+                label = "Study Buddy",
+                description = "Find a study buddy",
+                imageResource = R.drawable.studybuddy,
+                onClick = {
+                    selectScreenViewModel.handleServiceSelection(
+                        selectedService = "Study Buddy",
+                        navigateToScreen = { /* Navigate to Study Buddy screen */ },
+                        showLoginPrompt = { /* Show login prompt */ },
+                        isLoggedIn = false // Placeholder: Replace with actual logged-in state
+                    )
+                }
             )
 
-            ServiceCard(label = "Vacant", description = "Find a study buddy",
-                imageResource = R.drawable.studybuddy, onClick = { /* Handle click */ }
+            ServiceCard(
+                label = "Plate Pal",
+                description = "Check dining menus with allergen details",
+                imageResource = R.drawable.fooding,
+                onClick = {
+                    selectScreenViewModel.handleServiceSelection(
+                        selectedService = "Plate Pal",
+                        navigateToScreen = { /* Navigate to Plate Pal screen */ },
+                        showLoginPrompt = { /* No login prompt needed */ },
+                        isLoggedIn = true // Plate Pal doesn't depend on login; set to true by default
+                    )
+                }
             )
 
+            ServiceCard(
+                label = "Under Construction",
+                description = "Feature currently unavailable",
+                imageResource = R.drawable.construction,
+                onClick = {
+                    println("Under Construction")
+                }
+            )
         }
 
     }
