@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,7 +33,8 @@ import com.example.a6starter.R
 
 @Composable
 fun SelectServiceScreen(
-    navigateToMainScreens: () -> Unit,
+    onLoginClick: () -> Unit,
+    onStudyBuddyClick: () -> Unit,
     selectScreenViewModel: SelectServiceViewModel = hiltViewModel()
 ){
     val currentViewState = selectScreenViewModel.selectServiceViewState.collectAsState().value
@@ -47,24 +49,26 @@ fun SelectServiceScreen(
             verticalArrangement = Arrangement.Top
         )
         {
+            InfoBox(currentViewState.infoBox, selectScreenViewModel::toggleInfoBox)
+
             Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
-                InfoButton(onClick = { /* Handle click */ })
+                InfoButton(onClick = {
+                    selectScreenViewModel.toggleInfoBox()
+                })
             }
             LoginCard(
                 label = "Login",
-                onClick = { println("Under Construction") } // Will change this later to
-            // actually navigate to the login screen or do a cool-up animation!
+                onClick = { onLoginClick() }
             )
 
             ServiceCard(
                 label = "Study Buddy",
-                description = "Find a study buddy",
                 imageResource = R.drawable.studybuddy,
                 onClick = {
                     selectScreenViewModel.handleServiceSelection(
                         selectedService = "Study Buddy",
                         navigateToScreen = { /* Navigate to Study Buddy screen */ },
-                        showLoginPrompt = { /* Show login prompt */ },
+                        showLoginPrompt = { onStudyBuddyClick() },
                         isLoggedIn = false // Placeholder: Replace with actual logged-in state
                     )
                 }
@@ -72,7 +76,6 @@ fun SelectServiceScreen(
 
             ServiceCard(
                 label = "Plate Pal",
-                description = "Check dining menus with allergen details",
                 imageResource = R.drawable.fooding,
                 onClick = {
                     selectScreenViewModel.handleServiceSelection(
@@ -86,7 +89,6 @@ fun SelectServiceScreen(
 
             ServiceCard(
                 label = "Under Construction",
-                description = "Feature currently unavailable",
                 imageResource = R.drawable.construction,
                 onClick = {
                     println("Under Construction")
@@ -117,9 +119,8 @@ fun LoginCard(label: String, onClick: () -> Unit){
     }
 }
 
-// Notes: Not sure if a description is needed maybe I will add an info button
 @Composable
-fun ServiceCard(label: String, description: String, imageResource: Int, onClick: () -> Unit) {
+fun ServiceCard(label: String, imageResource: Int, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(16.dp)
@@ -161,7 +162,36 @@ fun InfoButton(onClick: () -> Unit) {
     ) {
         Icon(
             imageVector = Icons.Filled.Info,
-            contentDescription = "Information Icon"
+            contentDescription = "Information"
         )
+    }
+}
+
+@Composable
+fun InfoBox(isVisible: Boolean, onClose: () -> Unit){
+    if (!isVisible) return
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(20.dp)
+        .background(Color.Gray.copy(alpha = 0.5f)),
+        contentAlignment = Alignment.Center
+    ){
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(text = "Information")
+            IconButton(
+                onClick = onClose,
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close",
+                    tint = Color.Red
+                )
+            }
+        }
+
     }
 }

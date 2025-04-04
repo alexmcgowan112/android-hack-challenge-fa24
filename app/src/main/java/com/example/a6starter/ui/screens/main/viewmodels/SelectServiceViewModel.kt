@@ -17,7 +17,8 @@ data class SelectServiceViewState(
     val availableServices: List<String> = emptyList(),
     val selectedService: String? = null,
     val errorMessage: String? = null,
-    val loading: Boolean = false
+    val loading: Boolean = false,
+    val infoBox: Boolean = false
 )
 
 @HiltViewModel
@@ -33,6 +34,15 @@ class SelectServiceViewModel @Inject constructor(
     private val errorMessageFlow = MutableStateFlow<String?>(null)
     // Flow for the loading state.
     private val loadingFlow = MutableStateFlow(false)
+    // Flow for the info box state.
+    private val infoBoxFlow = MutableStateFlow(false)
+
+    // Clear the error message after displaying it.
+    init {
+        errorMessageFlow.value = null
+    }
+
+
 
     /**
      * The current view state for the service selection screen.
@@ -43,13 +53,15 @@ class SelectServiceViewModel @Inject constructor(
             availableServicesFlow,
             selectedServiceFlow,
             errorMessageFlow,
-            loadingFlow
-        ) { services, selected, error, loading ->
+            loadingFlow,
+            infoBoxFlow
+        ) { services, selected, error, loading, infoBox ->
             SelectServiceViewState(
                 availableServices = services,
                 selectedService = selected,
                 errorMessage = error,
-                loading = loading
+                loading = loading,
+                infoBox = infoBox
             )
         }.stateIn(
             scope = viewModelScope,
@@ -83,6 +95,10 @@ class SelectServiceViewModel @Inject constructor(
                 loadingFlow.value = false
             }
         }
+    }
+    // Toggle the info box visibility.
+    fun toggleInfoBox() {
+        infoBoxFlow.value = !infoBoxFlow.value
     }
 
     /**
@@ -118,13 +134,5 @@ class SelectServiceViewModel @Inject constructor(
                 }
             }
         }
-    }
-    /*
-    Shows a login prompt if the user tries to access a service that requires login or presses the
-    login button. Very useful!
-     */
-    //TODO 1: Make this actually show a login prompt
-    fun showLoginPrompt() {
-        errorMessageFlow.value = "Please log in to access this service."
     }
 }

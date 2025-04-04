@@ -1,5 +1,6 @@
 package com.example.a6starter.ui.screens.main.views
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,30 +27,42 @@ import com.example.a6starter.ui.screens.main.viewmodels.LoginScreenViewModel
 
 @Composable
 fun LoginScreen(
+    isVisible: Boolean,
     navigateToMainScreens: () -> Unit,
     loginScreenViewModel: LoginScreenViewModel = hiltViewModel()
 ) {
-    val currentViewState = loginScreenViewModel.loginScreenViewState.collectAsState().value
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = androidx.compose.animation.fadeIn() + androidx.compose.animation.scaleIn(),
+        exit = androidx.compose.animation.fadeOut() + androidx.compose.animation.scaleOut()
+    ) {
 
-    val brush = Brush.verticalGradient(
-        listOf(
-            Color(96, 150, 253),
-            Color(170, 182, 251)
+        val currentViewState = loginScreenViewModel.loginScreenViewState.collectAsState().value
+
+        val brush = Brush.verticalGradient(
+            listOf(
+                Color(96, 150, 253),
+                Color(170, 182, 251)
+            )
         )
-    )
 
-    Box (modifier = Modifier
-        .fillMaxSize()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
 
-        .background(brush)
-        .padding(20.dp),
-        contentAlignment = Alignment.Center) {
-        Column (horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)) {
-            if(currentViewState.hasAccount) {
-                Login(navigateToMainScreens)
-            } else {
-                Signup(navigateToMainScreens)
+                .background(brush)
+                .padding(20.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                if (currentViewState.hasAccount) {
+                    Login(navigateToMainScreens)
+                } else {
+                    Signup(navigateToMainScreens)
+                }
             }
         }
     }

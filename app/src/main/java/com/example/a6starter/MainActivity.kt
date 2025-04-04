@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -75,12 +76,32 @@ class MainActivity : ComponentActivity() {
         setContent {
             Theme {
                 var loggedIn by remember { mutableStateOf(false) }
+                var showLogin by remember { mutableStateOf(false) }
 
-                if(loggedIn) {
-                    NavigableScreens({loggedIn = !loggedIn})
-                } else {
-                    SelectServiceScreen({loggedIn = !loggedIn})
-                    //LoginScreen({loggedIn = !loggedIn})
+                Box(modifier = Modifier.fillMaxSize()) {
+                    if (loggedIn) {
+                        NavigableScreens(
+                            navigateToLoginScreen = { loggedIn = false }
+                            //onLogout = { loggedIn = false }
+                        )
+                    } else {
+                        SelectServiceScreen(
+                            onLoginClick = { showLogin = true },
+                            onStudyBuddyClick = { /* Implement navigation later*/ }
+                        )
+                    }
+
+                    if (showLogin) {
+                        LoginScreen(
+                            isVisible = showLogin,
+                            navigateToMainScreens = {
+                                // When login is successful, set loggedIn to true
+                                // and hide the login screen. Additional logic, maybe later?
+                                loggedIn = true
+                                showLogin = false
+                            }
+                        )
+                    }
                 }
             }
         }
